@@ -131,6 +131,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  mirai_dropdown_menu:
+    dependency: "direct main"
+    description:
+      name: mirai_dropdown_menu
+      sha256: "26cf411c3e01d7038c8348698369894b698870f774efbbe6389eb49886cc99be"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6+2"
   path:
     dependency: transitive
     description:

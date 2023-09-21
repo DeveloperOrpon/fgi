@@ -39,6 +39,7 @@ dependencies:
   carousel_slider: ^4.2.1
   animate_do: ^3.1.2
   timeline_tile: ^2.0.0
+  mirai_dropdown_menu: ^0.0.6+2
   get: ^4.6.6
 
 
@@ -67,6 +68,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/demo/
   #   - images/a_dot_ham.jpeg
   fonts:
     - family: Rubik

@@ -1,3 +1,4 @@
+import 'package:fgi_y2j/features/authentication/controller/AuthenticationController.dart';
 import 'package:fgi_y2j/features/authentication/screen/SIgnUpScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,7 @@ class RedirectScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 1),() {
-      Get.to(const SignUpScreen(),transition: Transition.cupertino);
+      Get.to(const SignUpScreen(),transition: Transition.cupertino,binding:BindingsBuilder(()=> AuthenticationController()));
     },);
     return Scaffold(
       body: Center(
