@@ -1,4 +1,5 @@
 import 'package:fgi_y2j/config/theme/themes.dart';
+import 'package:fgi_y2j/features/dashboard/screen/DashboardScreen.dart';
 import 'package:fgi_y2j/redirectScreeen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme:AppThemes.main(),
-      home: const RedirectScreen(),
+      home: const DashboardScreen(),
     );
   }
 }

@@ -533,7 +533,7 @@ class SignUpScreen extends StatelessWidget {
                             : Center();
                   }),
                   Obx(() => authenticationController.timelineIndex == 3
-                      ? Column(
+                      ? const Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

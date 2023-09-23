@@ -56,4 +56,10 @@ class AppTextStyles {
     fontFamily: fontFamily,
     fontSize: 10,
   );
+  static const TextStyle drawerTextStyle = TextStyle(
+    fontFamily: fontFamily,
+    color: Colors.black54,
+    fontSize: 16,
+  );
+
 }

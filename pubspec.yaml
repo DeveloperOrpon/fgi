@@ -39,8 +39,11 @@ dependencies:
   carousel_slider: ^4.2.1
   animate_do: ^3.1.2
   timeline_tile: ^2.0.0
-  mirai_dropdown_menu: ^0.0.6+2
+  font_awesome_flutter: ^10.5.0
   get: ^4.6.6
+
+#  information Package
+
 
 
 dev_dependencies:

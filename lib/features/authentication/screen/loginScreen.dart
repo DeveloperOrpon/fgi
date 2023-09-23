@@ -3,6 +3,8 @@ import 'dart:developer';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:fgi_y2j/config/style/app_colors.dart';
+import 'package:fgi_y2j/features/dashboard/screen/DashboardScreen.dart';
+import 'package:fgi_y2j/features/dashboard/controller/dashboardController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -110,7 +112,9 @@ class LoginScreen extends StatelessWidget {
                         SizedBox(height: 20),
                         Center(
                             child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(const DashboardScreen(),transition: Transition.cupertino,binding:BindingsBuilder(()=> DashBoardController()));
+                          },
                           child: Text(
                             "Login",
                             style: AppTextStyles.boldstyle.copyWith(

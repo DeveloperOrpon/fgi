@@ -11,7 +11,7 @@ class RedirectScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 1),() {
-      Get.to(const SignUpScreen(),transition: Transition.cupertino,binding:BindingsBuilder(()=> AuthenticationController()));
+      Get.to(const LoginScreen(),transition: Transition.cupertino,binding:BindingsBuilder(()=> AuthenticationController()));
     },);
     return Scaffold(
       body: Center(
