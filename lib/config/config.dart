@@ -28,3 +28,4 @@ final dashBoardDrawerOption = [
     'icon': FontAwesomeIcons.signOut,
   }
 ];
+const String currencySymbol='৳';

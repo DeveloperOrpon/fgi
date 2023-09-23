@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTextStyles {
   static const String fontFamily = 'Rubik';
@@ -60,6 +61,12 @@ class AppTextStyles {
     fontFamily: fontFamily,
     color: Colors.black54,
     fontSize: 16,
+  );  static  TextStyle summeryTextStyle = GoogleFonts.notoSansDeseret(
+
+    color: Colors.white,
+    fontSize: 14,
+    letterSpacing: 1.1,
+    fontWeight: FontWeight.bold
   );
 
 }

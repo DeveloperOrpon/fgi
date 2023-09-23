@@ -1,9 +1,12 @@
+import 'package:fgi_y2j/features/dashboard/screen/DashboardScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../config/config.dart';
 import '../../../config/style/text_style.dart';
+import '../../order/screen/OrderHistoryScreen.dart';
+import '../../view_products/screen/AllProductScreen.dart';
 import '../controller/dashboardController.dart';
 
 class DashDrawer extends StatelessWidget {
@@ -38,6 +41,16 @@ class DashDrawer extends StatelessWidget {
                       onTap: () {
                         dashBoardController.selectDrawerIndex.value =
                             e['index'] as int;
+                        if( e['index']==1){
+                          dashBoardController.selectDrawerIndex.value=1;
+                          Get.offAll(const OrderHistoryScreen(),transition: Transition.fadeIn,duration: const Duration(milliseconds: 600));
+                        }if( e['index']==2){
+                          dashBoardController.selectDrawerIndex.value=2;
+                          Get.offAll(const AllProductScreen(),transition: Transition.fadeIn,duration: const Duration(milliseconds: 600));
+                        }else{
+                          dashBoardController.selectDrawerIndex.value=0;
+                          Get.offAll(const DashboardScreen(),transition: Transition.fadeIn,duration: const Duration(milliseconds: 600));
+                        }
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),

@@ -1,0 +1,297 @@
+import 'package:animate_do/animate_do.dart';
+import 'package:fgi_y2j/features/order/screen/OrderHistoryScreen.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:get/get.dart';
+import 'package:pull_down_button/pull_down_button.dart';
+
+import '../../../config/style/text_style.dart';
+import '../../../constants/var_const.dart';
+import '../../order/screen/CompleteOrdersScreen.dart';
+import '../../order/screen/PendingOrdersScreen.dart';
+import '../controller/dashboardController.dart';
+
+class DashboardHome extends StatelessWidget {
+  const DashboardHome({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final dashBoardController = Get.put(DashBoardController());
+    return CustomScrollView(
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+      slivers: [
+        SliverList(
+            delegate: SliverChildListDelegate([
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: TextFormField(
+              decoration: InputDecoration(
+                prefixIcon: const Icon(
+                  Icons.search,
+                  size: 30,
+                ),
+                hintText: "Search",
+                hintStyle: const TextStyle(color: Colors.grey, fontSize: 16),
+                filled: true,
+                fillColor: Colors.grey.shade200,
+              ),
+            ),
+          )
+        ])),
+
+        ///order summery
+        SliverList(
+            delegate: SliverChildListDelegate([
+              Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Order Summery",
+                        style: AppTextStyles.drawerTextStyle.copyWith(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          dashBoardController.selectDrawerIndex.value=1;
+                          Get.offAll(const OrderHistoryScreen(),transition: Transition.fadeIn);
+                        },
+                        child: Text(
+                          "See All",
+                          style: AppTextStyles.drawerTextStyle.copyWith(
+                              fontSize: 18,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.normal,
+                              decoration: TextDecoration.underline),
+                        ),
+                      ),
+                    ],
+                  )),
+              Row(
+                children: [
+                  Expanded(
+                    child: FadeInLeft(
+                      duration: 300.ms,
+                      child: Container(
+                        margin: EdgeInsets.all(8),
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              "Total Orders",
+                              style: AppTextStyles.summeryTextStyle,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "(Today)",
+                                  style: AppTextStyles.summeryTextStyle,
+                                ),
+                                PullDownButton(
+                                  itemBuilder: (context) => [
+                                    PullDownMenuItem.selectable(
+                                      onTap: () {},
+                                      selected: true,
+                                      title: 'Today',
+                                      icon: CupertinoIcons.circle_fill,
+                                      iconColor: CupertinoColors.systemGreen
+                                          .resolveFrom(context),
+                                    ),
+                                    PullDownMenuItem.selectable(
+                                      onTap: () {},
+                                      selected: false,
+                                      title: 'Tomorrow',
+                                      icon: CupertinoIcons.circle_fill,
+                                      iconColor: CupertinoColors.systemOrange
+                                          .resolveFrom(context),
+                                    ),
+                                    PullDownMenuItem.selectable(
+                                      onTap: () {},
+                                      selected: false,
+                                      title: 'Yesterday',
+                                      icon: CupertinoIcons.circle_fill,
+                                      iconColor: CupertinoColors.systemIndigo
+                                          .resolveFrom(context),
+                                    )
+                                  ],
+                                  buttonBuilder: (context, showMenu) => InkWell(
+                                    onTap: showMenu,
+                                    child: const Icon(
+                                      Icons.arrow_drop_down_outlined,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Text(
+                              "30",
+                              style: AppTextStyles.summeryTextStyle
+                                  .copyWith(fontSize: 18),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Get.to(const PendingOrderScreen(),transition:Transition.upToDown);
+                      },
+                      child: FadeInLeft(
+                        duration: 300.ms,
+                        delay: 300.ms,
+                        child: Container(
+                          margin: EdgeInsets.all(8),
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.redAccent,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                "Pending",
+                                style: AppTextStyles.summeryTextStyle,
+                              ),
+                              Text(
+                                "Orders",
+                                style: AppTextStyles.summeryTextStyle,
+                              ),
+                              Text(
+                                "02",
+                                style: AppTextStyles.summeryTextStyle
+                                    .copyWith(fontSize: 18),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child:  InkWell(
+                      onTap: () {
+                        Get.to(const CompleteOrderScreen(),transition:Transition.upToDown);
+                      },
+                      child: FadeInLeft(
+                        duration: 300.ms,
+                        delay: 600.ms,
+                        child: Container(
+                          margin: EdgeInsets.all(8),
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                "Completed",
+                                style: AppTextStyles.summeryTextStyle,
+                              ),
+                              Text(
+                                "Orders",
+                                style: AppTextStyles.summeryTextStyle,
+                              ),
+                              Text(
+                                "15",
+                                style: AppTextStyles.summeryTextStyle
+                                    .copyWith(fontSize: 18),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+        ])),
+
+        ///product category
+        SliverList(
+            delegate: SliverChildListDelegate([
+          SizedBox(height: 10),
+          Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Product categories",
+                    style: AppTextStyles.drawerTextStyle.copyWith(
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  Text(
+                    "See All",
+                    style: AppTextStyles.drawerTextStyle.copyWith(
+                        fontSize: 18,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.normal,
+                        decoration: TextDecoration.underline),
+                  ),
+                ],
+              )),
+        ])),
+        SliverGrid.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, mainAxisExtent: 160, mainAxisSpacing: 10),
+          itemBuilder: (context, index) {
+            return BounceInUp(
+              delay: (200+(100*index)).ms,
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        demoCategories[index]['url'],
+                        height: 160,
+                        width: Get.width*.3,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      gradient: LinearGradient(colors: [
+                        Colors.transparent,Colors.black,
+                      ],stops: [.4,1],begin: Alignment.topCenter,end: Alignment.bottomCenter)
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 20),
+                    alignment: Alignment.bottomCenter,
+                    child: Text( demoCategories[index]['name'],style:  AppTextStyles.summeryTextStyle,),
+                  )
+                ],
+              ),
+            );
+          },
+          itemCount: demoCategories.length,
+        )
+      ],
+    );
+  }
+}
