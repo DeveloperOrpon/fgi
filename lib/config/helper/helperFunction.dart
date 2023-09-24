@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -55,4 +57,8 @@ BackdropFilter _buildExitDialog(BuildContext context) {
       ],
     ),
   );
+}
+
+printLog(String message){
+  log(message,time: DateTime.now(),name: "!!--DeveloperOrpon!!--",zone:Zone.current );
 }

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../config/helper/helperFunction.dart';
+import '../../../config/route.dart';
 import '../../../config/style/text_style.dart';
 import '../Component/dashDrawer.dart';
 import '../Component/dashboardHome.dart';
@@ -18,10 +19,12 @@ class DashboardScreen extends StatelessWidget {
       onWillPop: () => onWillPop(context),
       child: Scaffold(
         appBar: AppBar(
-          systemOverlayStyle:const SystemUiOverlayStyle(
-            statusBarBrightness: Brightness.light,
+          systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarColor: Colors.white,
-          ) ,
+            statusBarIconBrightness: Brightness.dark,
+            // For Android (dark icons)
+            statusBarBrightness: Brightness.light, // For iOS (dark icons)
+          ),
           backgroundColor: Colors.transparent,
           title: const Text("DashBoard"),
           actions: [
@@ -32,14 +35,21 @@ class DashboardScreen extends StatelessWidget {
                   color: Colors.black,
                 )),
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  AppRoute().cartPage();
+                },
                 icon: const Icon(
                   CupertinoIcons.shopping_cart,
                   color: Colors.black,
                 ))
           ],
         ),
-        body: const DashboardHome(),
+        body: PageView(
+          physics: const BouncingScrollPhysics(),
+          children: const [
+            DashboardHome(),
+          ],
+        ),
         drawer: const DashDrawer(),
         backgroundColor: CupertinoColors.white,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

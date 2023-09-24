@@ -8,14 +8,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../config/config.dart';
 
-class SingleProductUi extends StatefulWidget {
-  const SingleProductUi({Key? key}) : super(key: key);
+class CartProductUi extends StatefulWidget {
+  const CartProductUi({Key? key}) : super(key: key);
 
   @override
-  State<SingleProductUi> createState() => _SingleProductUiState();
+  State<CartProductUi> createState() => _CartProductUiState();
 }
 
-class _SingleProductUiState extends State<SingleProductUi> {
+class _CartProductUiState extends State<CartProductUi> {
   int countProduct = 1;
   Timer? _timer;
   bool _longPressCanceled = false;
@@ -38,9 +38,9 @@ class _SingleProductUiState extends State<SingleProductUi> {
     return Container(
       margin: const EdgeInsets.all(8),
       height: 270,
-      width: Get.width * .4,
+      width: Get.width * .5,
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.grey.shade200,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
@@ -62,7 +62,7 @@ class _SingleProductUiState extends State<SingleProductUi> {
                     "assets/demo/demo1.png",
                     height: 110,
                     fit: BoxFit.cover,
-                    width: Get.width * .4 - 4,
+                    width: Get.width * .5 - 20,
                   ),
                 ),
               ),
@@ -169,17 +169,6 @@ class _SingleProductUiState extends State<SingleProductUi> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                      onPressed: () {}, child: Text("Add To Cart")),
-                ),
-              ],
-            ),
-          )
         ],
       ),
     );

@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class DashBoardController extends GetxController{
-  RxInt selectDrawerIndex=RxInt(0);
+class AllProductController extends GetxController{
   final RefreshController refreshController = RefreshController(initialRefresh: false);
+  RxBool isLoadingAllProduct=RxBool(false);
 
   void onRefreshPage() async{
     await Future.delayed(const Duration(milliseconds: 1000));

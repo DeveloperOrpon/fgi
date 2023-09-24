@@ -1,3 +1,4 @@
+import 'package:fgi_y2j/config/helper/helperFunction.dart';
 import 'package:fgi_y2j/features/dashboard/screen/DashboardScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,10 +40,16 @@ class DashDrawer extends StatelessWidget {
                   child: Obx(() {
                     return ListTile(
                       onTap: () {
+                        if(dashBoardController.selectDrawerIndex.value==e['index']){
+                          Get.back();
+                          return;
+                        }
                         dashBoardController.selectDrawerIndex.value =
                             e['index'] as int;
                         if( e['index']==1){
+                          printLog("index : ${e['index'] }");
                           dashBoardController.selectDrawerIndex.value=1;
+                          Get.back();
                           Get.offAll(const OrderHistoryScreen(),transition: Transition.fadeIn,duration: const Duration(milliseconds: 600));
                         }if( e['index']==2){
                           dashBoardController.selectDrawerIndex.value=2;

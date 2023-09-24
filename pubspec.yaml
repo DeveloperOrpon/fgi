@@ -25,6 +25,8 @@ dependencies:
   pull_down_button: ^0.9.3
   data_table_2: ^2.5.8
   adaptive_scrollbar: ^2.1.2
+  pull_to_refresh: ^2.0.0
+  date_time_picker_widget: ^2.0.0
 
 #  information Package
 
