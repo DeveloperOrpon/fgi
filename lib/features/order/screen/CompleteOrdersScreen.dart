@@ -6,15 +6,20 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../../../config/helper/helperFunction.dart';
 import '../../../config/route.dart';
+import '../../../config/style/app_colors.dart';
 import '../../../config/style/text_style.dart';
+import '../controller/orderController.dart';
 
 class CompleteOrderScreen extends StatelessWidget {
   const CompleteOrderScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final orderController=Get.put(OrderController());
     return Scaffold(
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -70,140 +75,182 @@ class CompleteOrderScreen extends StatelessWidget {
               ))
         ],
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverList(
-              delegate: SliverChildListDelegate([
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        size: 30,
+      body: SmartRefresher(
+        physics: const BouncingScrollPhysics(),
+        enablePullDown: true,
+        enablePullUp: true,
+        header: const WaterDropHeader(
+          waterDropColor: AppColors.primary,
+          refresh: CupertinoActivityIndicator(color:  AppColors.black,radius: 15,),
+        ),
+        footer: CustomFooter(
+          builder: (context, mode){
+            Widget body ;
+            if(mode==LoadStatus.idle){
+              body =  const Text("Pull up load");
+            }
+            else if(mode==LoadStatus.loading){
+              body =  const CupertinoActivityIndicator();
+            }
+            else if(mode == LoadStatus.failed){
+              body = const Text("Load Failed!Click retry!");
+            }
+            else if(mode == LoadStatus.canLoading){
+              body = const Text("release to load more");
+            }
+            else{
+              body = const Text("No more Data");
+            }
+            return SizedBox(
+              height: 55.0,
+              child: Center(child:body),
+            );
+          },
+        ),
+        controller: orderController.refreshCompleteController,
+        onRefresh: () {
+          printLog("onRefresh");
+          orderController.onRefreshCompletePage();
+        },
+        onLoading: () {
+          printLog("onLoading");
+          orderController.onLoadingCompletePage();
+        },
+        child: CustomScrollView(
+          slivers: [
+            SliverList(
+                delegate: SliverChildListDelegate([
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          size: 30,
+                        ),
+                        hintText: "Search",
+                        hintStyle:
+                        const TextStyle(color: Colors.grey, fontSize: 16),
+                        filled: true,
+                        fillColor: Colors.grey.shade200,
                       ),
-                      hintText: "Search",
-                      hintStyle:
-                      const TextStyle(color: Colors.grey, fontSize: 16),
-                      filled: true,
-                      fillColor: Colors.grey.shade200,
+                    ),
+                  )
+                ])),
+            ///Pending Order History
+            ///Completed Order History
+            SliverList(
+                delegate: SliverChildListDelegate([
+                  const SizedBox(height: 15),
+                  Padding(
+                      padding:
+                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Completed Orders",
+                            style: AppTextStyles.drawerTextStyle.copyWith(
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      )),
+                ])),
+            SliverList(
+                delegate: SliverChildListDelegate([
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      "August, 2023",
+                      style: AppTextStyles.drawerTextStyle.copyWith(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500),
                     ),
                   ),
-                )
-              ])),
-          ///Pending Order History
-          ///Completed Order History
-          SliverList(
-              delegate: SliverChildListDelegate([
-                const SizedBox(height: 15),
-                Padding(
-                    padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Completed Orders",
-                          style: AppTextStyles.drawerTextStyle.copyWith(
-                              fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    )),
-              ])),
-          SliverList(
-              delegate: SliverChildListDelegate([
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    "August, 2023",
-                    style: AppTextStyles.drawerTextStyle.copyWith(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(12.0),
+                  const Padding(
+                    padding: EdgeInsets.all(12.0),
 
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 8,
-                        backgroundColor: Colors.green,
-                      ),
-                      Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 8.0),
-                            child: Text(
-                                'Triifol Burgers: 56psc buns, 20psc Mustard, 100 Coca-cola cans, 40pcs Tyson Chicken'),
-                          ))
-                    ],
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 8,
+                          backgroundColor: Colors.green,
+                        ),
+                        Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                  'Triifol Burgers: 56psc buns, 20psc Mustard, 100 Coca-cola cans, 40pcs Tyson Chicken'),
+                            ))
+                      ],
+                    ),
                   ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 8,
-                        backgroundColor: Colors.green,
-                      ),
-                      Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 8.0),
-                            child: Text('Riley’s Kitchen: 6psc buns, 2psc Mustard'),
-                          ))
-                    ],
+                  const Padding(
+                    padding: EdgeInsets.all(12.0),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 8,
+                          backgroundColor: Colors.green,
+                        ),
+                        Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 8.0),
+                              child: Text('Riley’s Kitchen: 6psc buns, 2psc Mustard'),
+                            ))
+                      ],
+                    ),
                   ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 8,
-                        backgroundColor: Colors.green,
-                      ),
-                      Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 8.0),
-                            child: Text(
-                                'Triifol Burgers: 56psc buns, 20psc Mustard, 100 Coca-cola cans, 40pcs Tyson Chicken'),
-                          ))
-                    ],
+                  const Padding(
+                    padding: EdgeInsets.all(12.0),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 8,
+                          backgroundColor: Colors.green,
+                        ),
+                        Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                  'Triifol Burgers: 56psc buns, 20psc Mustard, 100 Coca-cola cans, 40pcs Tyson Chicken'),
+                            ))
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    "September, 2023",
-                    style: AppTextStyles.drawerTextStyle.copyWith(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      "September, 2023",
+                      style: AppTextStyles.drawerTextStyle.copyWith(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 8,
-                        backgroundColor: Colors.green,
-                      ),
-                      Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 8.0),
-                            child: Text(
-                                'Triifol Burgers: 56psc buns, 20psc Mustard, 100 Coca-cola cans, 40pcs Tyson Chicken'),
-                          ))
-                    ],
+                  const Padding(
+                    padding: EdgeInsets.all(12.0),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 8,
+                          backgroundColor: Colors.green,
+                        ),
+                        Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                  'Triifol Burgers: 56psc buns, 20psc Mustard, 100 Coca-cola cans, 40pcs Tyson Chicken'),
+                            ))
+                      ],
+                    ),
                   ),
-                ),
-              ])),
-        ],
+                ])),
+          ],
+        ),
       ),
     );
   }

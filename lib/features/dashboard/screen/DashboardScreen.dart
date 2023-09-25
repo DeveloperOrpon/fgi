@@ -1,12 +1,16 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:fgi_y2j/features/dashboard/controller/dashboardController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 import '../../../config/helper/helperFunction.dart';
 import '../../../config/route.dart';
 import '../../../config/style/text_style.dart';
+import '../../order/component/OrderHistoryHome.dart';
+import '../../view_products/component/AllProductHome.dart';
 import '../Component/dashDrawer.dart';
 import '../Component/dashboardHome.dart';
 
@@ -15,6 +19,7 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dashboardController=Get.put(DashBoardController());
     return WillPopScope(
       onWillPop: () => onWillPop(context),
       child: Scaffold(
@@ -26,7 +31,14 @@ class DashboardScreen extends StatelessWidget {
             statusBarBrightness: Brightness.light, // For iOS (dark icons)
           ),
           backgroundColor: Colors.transparent,
-          title: const Text("DashBoard"),
+          title:  Obx(() {
+            return Text(dashboardController.selectDrawerIndex.value == 0
+                ? "DashBoard"
+                : dashboardController.selectDrawerIndex.value == 1
+                    ? "Order History"
+                    : "Products");
+          }
+          ),
           actions: [
             IconButton(
                 onPressed: () {},
@@ -45,9 +57,15 @@ class DashboardScreen extends StatelessWidget {
           ],
         ),
         body: PageView(
+          controller:dashboardController.pageController ,
+          onPageChanged: (value) {
+            dashboardController.selectDrawerIndex.value=value;
+          },
           physics: const BouncingScrollPhysics(),
           children: const [
             DashboardHome(),
+            OrderHistoryHome(),
+            AllProductsHome(),
           ],
         ),
         drawer: const DashDrawer(),
@@ -55,21 +73,21 @@ class DashboardScreen extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: BounceInUp(
             child: FloatingActionButton.extended(
-            backgroundColor: Color(0xFFF1C700),
+            backgroundColor: const Color(0xFFF1C700),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
               onPressed: () {},
               label: Row(
                 children: [
-                  SizedBox(width: 5),
-                  Icon(FontAwesomeIcons.cartShopping),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 5),
+                  const Icon(FontAwesomeIcons.cartShopping),
+                  const SizedBox(width: 10),
                   Text(
                     'Add new order',
                     style: AppTextStyles.drawerTextStyle
                         .copyWith(fontWeight: FontWeight.w400,color: Colors.black),
-                  ),SizedBox(width: 5),
+                  ),const SizedBox(width: 5),
 
                 ],
               )),

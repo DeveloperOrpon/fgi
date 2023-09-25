@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../config/helper/helperFunction.dart';
 import '../../../config/route.dart';
+import '../../../config/style/app_colors.dart';
 import '../../../config/style/text_style.dart';
 import '../controller/orderController.dart';
 
@@ -69,147 +71,188 @@ class InvoiceScreen extends StatelessWidget {
                 ))
           ],
         ),
-        body: CustomScrollView(
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          slivers: [
+        body: SmartRefresher(
+          physics: const BouncingScrollPhysics(),
+          enablePullDown: true,
+          enablePullUp: true,
+          header: const WaterDropHeader(
+            waterDropColor: AppColors.primary,
+            refresh: CupertinoActivityIndicator(color:  AppColors.black,radius: 15,),
+          ),
+          footer: CustomFooter(
+            builder: (context, mode){
+              Widget body ;
+              if(mode==LoadStatus.idle){
+                body =  const Text("Pull up load");
+              }
+              else if(mode==LoadStatus.loading){
+                body =  const CupertinoActivityIndicator();
+              }
+              else if(mode == LoadStatus.failed){
+                body = const Text("Load Failed!Click retry!");
+              }
+              else if(mode == LoadStatus.canLoading){
+                body = const Text("release to load more");
+              }
+              else{
+                body = const Text("No more Data");
+              }
+              return SizedBox(
+                height: 55.0,
+                child: Center(child:body),
+              );
+            },
+          ),
+          controller: orderController.refreshInvoiceController,
+          onRefresh: () {
+            printLog("onRefresh");
+            orderController.onRefreshInvoicePage();
+          },
+          onLoading: () {
+            printLog("onLoading");
+            orderController.onLoadingInvoicePage();
+          },
+          child: CustomScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            slivers: [
+              SliverList(
+                  delegate: SliverChildListDelegate([
+                    Padding(
+                        padding:
+                        const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Invoices (Pending)",
+                              style: AppTextStyles.drawerTextStyle.copyWith(
+                                  fontSize: 20,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        )),
+                    Container(
+                      height: 500,
+                      padding: const EdgeInsets.all(12),
+                      child: DataTable2(
+                          headingRowColor: MaterialStatePropertyAll(Colors.redAccent.withOpacity(.2)),
 
-            SliverList(
-                delegate: SliverChildListDelegate([
-                  Padding(
-                      padding:
-                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Invoices (Pending)",
-                            style: AppTextStyles.drawerTextStyle.copyWith(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      )),
-                  Container(
-                    height: 500,
-                    padding: const EdgeInsets.all(12),
-                    child: DataTable2(
-                        headingRowColor: MaterialStatePropertyAll(Colors.redAccent.withOpacity(.2)),
+                          columnSpacing: 12,
+                          horizontalMargin: 8,
+                          minWidth: 600,
+                          columns: const [
+                            DataColumn2(
+                              label: Text('Order ID'),
+                              size: ColumnSize.S,
+                            ),
+                            DataColumn2(
+                              label: Text('Items'),
+                              size: ColumnSize.S,
+                            ),
+                            DataColumn2(
+                              label: Text('Provider'),
+                              size: ColumnSize.M,
+                            ),
+                            DataColumn2(
+                              label: Text('Receiver'),
+                              size: ColumnSize.L,
+                            ),
+                            DataColumn2(
+                              label: Text('Inv.No.'),
+                              numeric: true,
+                              size: ColumnSize.L,
+                            ),
+                            DataColumn2(
+                              label: Text(''),
+                              numeric: true,
+                              size: ColumnSize.S,
+                            ),
+                          ],
+                          rows: List<DataRow>.generate(
+                              8,
+                                  (index) => const DataRow(cells: [
+                                DataCell(Text('0234')),
+                                DataCell(Text('108')),
+                                DataCell(Text('Y2J NYC')),
+                                DataCell(Text('Riley’s Kitchen')),
+                                DataCell(Text('234720345')),
+                                DataCell(Text('>'))
+                              ]))),
 
-                        columnSpacing: 12,
-                        horizontalMargin: 8,
-                        minWidth: 600,
-                        columns: const [
-                          DataColumn2(
-                            label: Text('Order ID'),
-                            size: ColumnSize.S,
-                          ),
-                          DataColumn2(
-                            label: Text('Items'),
-                            size: ColumnSize.S,
-                          ),
-                          DataColumn2(
-                            label: Text('Provider'),
-                            size: ColumnSize.M,
-                          ),
-                          DataColumn2(
-                            label: Text('Receiver'),
-                            size: ColumnSize.L,
-                          ),
-                          DataColumn2(
-                            label: Text('Inv.No.'),
-                            numeric: true,
-                            size: ColumnSize.L,
-                          ),
-                          DataColumn2(
-                            label: Text(''),
-                            numeric: true,
-                            size: ColumnSize.S,
-                          ),
-                        ],
-                        rows: List<DataRow>.generate(
-                            8,
-                                (index) => const DataRow(cells: [
-                              DataCell(Text('0234')),
-                              DataCell(Text('108')),
-                              DataCell(Text('Y2J NYC')),
-                              DataCell(Text('Riley’s Kitchen')),
-                              DataCell(Text('234720345')),
-                              DataCell(Text('>'))
-                            ]))),
+                    ),
+                    SizedBox(height: 50)
+                  ])),
+              SliverList(
+                  delegate: SliverChildListDelegate([
+                    Padding(
+                        padding:
+                        const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Invoices",
+                              style: AppTextStyles.drawerTextStyle.copyWith(
+                                  fontSize: 20,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        )),
+                    Container(
+                      height: 500,
+                      padding: const EdgeInsets.all(12),
+                      child: DataTable2(
+                          headingRowColor: MaterialStatePropertyAll(Colors.grey.withOpacity(.2)),
 
-                  ),
-                  SizedBox(height: 50)
-                ])),
-            SliverList(
-                delegate: SliverChildListDelegate([
-                  Padding(
-                      padding:
-                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Invoices",
-                            style: AppTextStyles.drawerTextStyle.copyWith(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      )),
-                  Container(
-                    height: 500,
-                    padding: const EdgeInsets.all(12),
-                    child: DataTable2(
-                        headingRowColor: MaterialStatePropertyAll(Colors.grey.withOpacity(.2)),
+                          columnSpacing: 12,
+                          horizontalMargin: 8,
+                          minWidth: 600,
+                          columns: const [
+                            DataColumn2(
+                              label: Text('Order ID'),
+                              size: ColumnSize.S,
+                            ),
+                            DataColumn2(
+                              label: Text('Items'),
+                              size: ColumnSize.S,
+                            ),
+                            DataColumn2(
+                              label: Text('Provider'),
+                              size: ColumnSize.M,
+                            ),
+                            DataColumn2(
+                              label: Text('Receiver'),
+                              size: ColumnSize.L,
+                            ),
+                            DataColumn2(
+                              label: Text('Inv.No.'),
+                              numeric: true,
+                              size: ColumnSize.L,
+                            ),
+                            DataColumn2(
+                              label: Text(''),
+                              numeric: true,
+                              size: ColumnSize.S,
+                            ),
+                          ],
+                          rows: List<DataRow>.generate(
+                              8,
+                                  (index) => const DataRow(cells: [
+                                DataCell(Text('0234')),
+                                DataCell(Text('108')),
+                                DataCell(Text('Y2J NYC')),
+                                DataCell(Text('Riley’s Kitchen')),
+                                DataCell(Text('234720345')),
+                                DataCell(Text('>'))
+                              ]))),
 
-                        columnSpacing: 12,
-                        horizontalMargin: 8,
-                        minWidth: 600,
-                        columns: const [
-                          DataColumn2(
-                            label: Text('Order ID'),
-                            size: ColumnSize.S,
-                          ),
-                          DataColumn2(
-                            label: Text('Items'),
-                            size: ColumnSize.S,
-                          ),
-                          DataColumn2(
-                            label: Text('Provider'),
-                            size: ColumnSize.M,
-                          ),
-                          DataColumn2(
-                            label: Text('Receiver'),
-                            size: ColumnSize.L,
-                          ),
-                          DataColumn2(
-                            label: Text('Inv.No.'),
-                            numeric: true,
-                            size: ColumnSize.L,
-                          ),
-                          DataColumn2(
-                            label: Text(''),
-                            numeric: true,
-                            size: ColumnSize.S,
-                          ),
-                        ],
-                        rows: List<DataRow>.generate(
-                            8,
-                                (index) => const DataRow(cells: [
-                              DataCell(Text('0234')),
-                              DataCell(Text('108')),
-                              DataCell(Text('Y2J NYC')),
-                              DataCell(Text('Riley’s Kitchen')),
-                              DataCell(Text('234720345')),
-                              DataCell(Text('>'))
-                            ]))),
-
-                  ),
-                  SizedBox(height: 50)
-                ])),
-          ],
+                    ),
+                    SizedBox(height: 50)
+                  ])),
+            ],
+          ),
         ),
       ),
     );
