@@ -30,6 +30,7 @@ dependencies:
   flutter_svg: ^2.0.7
   pdf: any
   printing: any
+  intl: any
 
 #  information Package
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 final dashBoardDrawerOption = [
   {
@@ -28,5 +29,6 @@ final dashBoardDrawerOption = [
     'icon': FontAwesomeIcons.signOut,
   }
 ];
-const String currencySymbol='৳';
+var format = NumberFormat.simpleCurrency(locale: 'bn');
+ String currencySymbol=NumberFormat.simpleCurrency(locale: 'bn').currencySymbol;
 

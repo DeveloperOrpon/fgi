@@ -4,7 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 
 import '../../../config/style/text_style.dart';
-import '../../invoice/screen/InvoiceScreen.dart';
+import '../../invoice/screen/InvoiceScreenPreview.dart';
 
 class BookingController extends GetxController {
   ///show Booking Confirm Dialog
@@ -54,7 +54,7 @@ class BookingController extends GetxController {
               child: const Text("View Invoice"),
               onPressed: () {
                 Get.back();
-                Get.to(const InvoiceScreen(),transition: Transition.fadeIn);
+                Get.to(const InvoiceScreenPreview(),transition: Transition.fadeIn);
               },
             )
           ],

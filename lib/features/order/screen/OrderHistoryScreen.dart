@@ -15,7 +15,7 @@ import '../../dashboard/Component/dashDrawer.dart';
 import '../component/OrderHistoryHome.dart';
 import '../controller/orderController.dart';
 import 'CompleteOrdersScreen.dart';
-import 'InvoicesScreen.dart';
+import '../../invoice/screen/InvoicesScreen.dart';
 import 'PendingOrdersScreen.dart';
 
 class OrderHistoryScreen extends StatelessWidget {

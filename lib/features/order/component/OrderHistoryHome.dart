@@ -12,7 +12,7 @@ import '../../../config/helper/helperFunction.dart';
 import '../../../config/style/app_colors.dart';
 import '../../../config/style/text_style.dart';
 import '../screen/CompleteOrdersScreen.dart';
-import '../screen/InvoicesScreen.dart';
+import '../../invoice/screen/InvoicesScreen.dart';
 import '../screen/PendingOrdersScreen.dart';
 
 class OrderHistoryHome extends StatelessWidget {
