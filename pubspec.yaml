@@ -31,6 +31,13 @@ dependencies:
   pdf: any
   printing: any
   intl: any
+  flutter_easyloading: ^3.0.5
+  contained_tab_bar_view: ^0.8.0
+
+  #Api Packages
+  shared_preferences: any
+  dio: ^5.3.3
+  connectivity: any
 
 #  information Package
 
@@ -46,6 +53,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  build_runner: ^2.4.4
+  hive_generator: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -7,6 +7,7 @@ import 'package:timeline_tile/timeline_tile.dart';
 import '../../../config/style/app_colors.dart';
 import '../../../config/style/text_style.dart';
 import '../../../constants/var_const.dart';
+import '../component/addressDialog.dart';
 import '../controller/AuthenticationController.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -454,8 +455,7 @@ class SignUpScreen extends StatelessWidget {
                             ),
                             child: InkWell(
                               onTap: () {
-                                authenticationController
-                                    .showAddressBottomSheet(context);
+                                showAddressBottomSheet(context);
                               },
                               child: Row(
                                 mainAxisAlignment:

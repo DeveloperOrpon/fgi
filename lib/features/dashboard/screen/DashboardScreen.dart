@@ -11,6 +11,7 @@ import '../../../config/route.dart';
 import '../../../config/style/text_style.dart';
 import '../../order/component/OrderHistoryHome.dart';
 import '../../view_products/component/AllProductHome.dart';
+import '../../view_products/component/ProductFilterDrawer.dart';
 import '../Component/dashDrawer.dart';
 import '../Component/dashboardHome.dart';
 
@@ -41,7 +42,9 @@ class DashboardScreen extends StatelessWidget {
           ),
           actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  AppRoute().notificationScreen();
+                },
                 icon: const Icon(
                   CupertinoIcons.bell,
                   color: Colors.black,
@@ -69,6 +72,7 @@ class DashboardScreen extends StatelessWidget {
           ],
         ),
         drawer: const DashDrawer(),
+        endDrawer: const ProductFilterDrawer(),
         backgroundColor: CupertinoColors.white,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: BounceInUp(
@@ -77,7 +81,10 @@ class DashboardScreen extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
-              onPressed: () {},
+              onPressed: () {
+                onlyLoading();
+              printLog("message");
+              },
               label: Row(
                 children: [
                   const SizedBox(width: 5),

@@ -91,7 +91,9 @@ class AllProductsHome extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Scaffold.of(context).openEndDrawer();
+                        },
                         icon: Icon(
                           CupertinoIcons.square_grid_2x2,
                           size: 35,

@@ -1,11 +1,10 @@
-
 import 'dart:developer';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:fgi_y2j/config/style/app_colors.dart';
-import 'package:fgi_y2j/features/dashboard/screen/DashboardScreen.dart';
-import 'package:fgi_y2j/features/dashboard/controller/dashboardController.dart';
+import 'package:fgi_y2j/features/authentication/controller/AuthenticationController.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../config/style/text_style.dart';
@@ -17,11 +16,21 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authenticationController = Get.put(AuthenticationController());
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        appBar: AppBar(
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Colors.black,
+            statusBarIconBrightness: Brightness.light,
+            // For Android (dark icons)
+            statusBarBrightness: Brightness.light, // For iOS (dark icons)
+          ),
+          backgroundColor: Colors.transparent,
+        ),
         backgroundColor: Colors.black,
         body: Stack(
           children: [
@@ -45,7 +54,8 @@ class LoginScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: ListView(
-                      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                      keyboardDismissBehavior:
+                          ScrollViewKeyboardDismissBehavior.onDrag,
                       physics: const BouncingScrollPhysics(),
                       children: [
                         SizedBox(
@@ -84,14 +94,27 @@ class LoginScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20.0),
                             child: TextFormField(
-                                style:const TextStyle(color: Colors.white),
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.mail,color: AppColors.white,),
-                                    hintText: 'Email Address',
-                                    hintStyle: AppTextStyles.boldstyle.copyWith(
-                                        color: AppColors.white,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16))),
+                              validator: (value) {
+                                if(value!.isEmpty ||!value.contains("@")){
+                                  return 'Please Provide Valid Email';
+                                }
+                                return null;
+                              },
+                              controller:
+                                  authenticationController.emailController,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.mail,
+                                  color: AppColors.white,
+                                ),
+                                hintText: 'Email Address',
+                                hintStyle: AppTextStyles.boldstyle.copyWith(
+                                    color: AppColors.white,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16),
+                              ),
+                            ),
                           ),
                         ),
                         BounceInLeft(
@@ -99,9 +122,19 @@ class LoginScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 6.0),
                             child: TextFormField(
-                              style:const TextStyle(color: Colors.white),
+                              controller: authenticationController.passwordController,
+                                validator: (value) {
+                                  if(value!.isEmpty || value.length<6){
+                                    return 'Please Provide Valid Email';
+                                  }
+                                  return null;
+                                },
+                                style: const TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
-                                    prefixIcon: Icon(Icons.lock,color: AppColors.white,),
+                                    prefixIcon: Icon(
+                                      Icons.lock,
+                                      color: AppColors.white,
+                                    ),
                                     hintText: 'Password',
                                     hintStyle: AppTextStyles.boldstyle.copyWith(
                                         color: AppColors.white,
@@ -113,7 +146,9 @@ class LoginScreen extends StatelessWidget {
                         Center(
                             child: OutlinedButton(
                           onPressed: () {
-                            Get.to(const DashboardScreen(),transition: Transition.cupertino,binding:BindingsBuilder(()=> DashBoardController()));
+                            authenticationController.loginWithEmailPassword(
+                                authenticationController.emailController.text.toLowerCase().trim(), authenticationController.passwordController.text.toLowerCase().trim());
+                            // Get.to(const DashboardScreen(),transition: Transition.cupertino,binding:BindingsBuilder(()=> DashBoardController()));
                           },
                           child: Text(
                             "Login",
@@ -139,10 +174,12 @@ class LoginScreen extends StatelessWidget {
                                     fontSize: 16),
                               )),
                         ),
-                         SizedBox(height: Get.height/6),
+                        SizedBox(height: Get.height / 6),
                         InkWell(
                           onTap: () {
-                            Get.to(const SignUpScreen(),curve: Curves.bounceInOut,transition: Transition.upToDown);
+                            Get.to(const SignUpScreen(),
+                                curve: Curves.bounceInOut,
+                                transition: Transition.upToDown);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),

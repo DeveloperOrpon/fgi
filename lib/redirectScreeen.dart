@@ -1,5 +1,12 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:fgi_y2j/config/helper/helperFunction.dart';
 import 'package:fgi_y2j/features/authentication/controller/AuthenticationController.dart';
+import 'package:fgi_y2j/features/authentication/model/UserRes.dart';
 import 'package:fgi_y2j/features/authentication/screen/SIgnUpScreen.dart';
+import 'package:fgi_y2j/features/cache_stroage/localStroage.dart';
+import 'package:fgi_y2j/features/dashboard/screen/DashboardScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,8 +18,20 @@ class RedirectScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 1),() {
-      Get.to(const LoginScreen(),transition: Transition.cupertino,binding:BindingsBuilder(()=> AuthenticationController()));
+    Future.delayed(const Duration(seconds: 0),() async {
+      final authController=Get.put(AuthenticationController());
+      String? jwt=await LocalStorage.getJWT();
+      if(jwt==null || jwt.isEmpty) {
+        Get.to(const LoginScreen(),transition: Transition.cupertino,binding:BindingsBuilder(()=> AuthenticationController()));
+      }else{
+        // authController.logout();
+        String? userMapString=await LocalStorage.getUserInformation();
+        Map<String, dynamic> userMap =json.decode(userMapString!);
+        printLog("userMapString ${userMapString.runtimeType}");
+        UserModel userModel=UserModel.fromJson(userMap);
+        authController.userModel.value=userModel;
+        Get.to(const DashboardScreen(),transition: Transition.cupertino,binding:BindingsBuilder(()=> DashBoardController()));
+      }
     },);
     return const Scaffold(
       body: Center(

@@ -1,12 +1,19 @@
+
+import 'dart:convert';
 import 'dart:developer';
-import 'dart:ui';
 
-import 'package:fgi_y2j/config/style/app_colors.dart';
+import 'package:connectivity/connectivity.dart';
+import 'package:fgi_y2j/config/helper/helperFunction.dart';
+import 'package:fgi_y2j/features/authentication/model/UserRes.dart';
+import 'package:fgi_y2j/features/cache_stroage/localStroage.dart';
+import 'package:fgi_y2j/redirectScreeen.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
-
+import 'package:dio/dio.dart' as DIO;
+import '../../../Api/Interceptors/ConnectivityRequestRetrier.dart';
+import '../../../Api/Interceptors/RetryOnConnectionChangeIntercptor.dart';
+import '../../../Api/api_route.dart';
 import '../../../constants/data/citiesRes.dart';
 import '../../../constants/data/divisionJson.dart';
 
@@ -17,79 +24,71 @@ class AuthenticationController extends GetxController {
   RxInt timelineIndex = RxInt(0);
   DivisionsRes divisionsRes = DivisionsRes.fromJson(division);
   DistrictRes districtRes = DistrictRes.fromJson(districts);
+  late DIO.Dio dio;
+  Rxn<UserRes> userRes=Rxn<UserRes>();
+  Rxn<UserModel> userModel=Rxn<UserModel>();
 
-  showAddressBottomSheet(BuildContext context) {
-    showCupertinoModalPopup(
-      filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-      context: context,
-      builder: (context) {
-        return Container(
-          height: Get.height * .3,
-          width: Get.width,
-          decoration: BoxDecoration(
-              color: CupertinoColors.black,
-              image: DecorationImage(
-                  image: AssetImage('assets/images/image3.png'),
-                  opacity: .3,
-                  fit: BoxFit.cover)),
-          child: Row(
-            children: [
-              Expanded(
-                child: ListWheelScrollView(
-                  onSelectedItemChanged: (value) {
+  ///controller login
+  final emailController=TextEditingController();
+  final passwordController=TextEditingController();
 
-                    selectDivision.value=(divisionsRes.divisions![value]);
-                  },
-                    itemExtent: 40,
-                    diameterRatio: 1.6,
-                    offAxisFraction: -0.4,
-                    squeeze: 0.8,
-                    clipBehavior: Clip.antiAlias,
-                    children: divisionsRes.divisions!
-                        .map((e) => Obx((){
-                            return Text(
-                                  e.name!,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline6!
-                                      .copyWith(color:selectDivision.value!=null && selectDivision.value!.name==e.name!?AppColors.strongAmer: CupertinoColors.white),
-                                );
-                          }
-                        ))
-                        .toList()),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 40),
-                width: 2,
-                color: AppColors.strongAmer,
-              ),
-              Expanded(
-                child: ListWheelScrollView(
-                    onSelectedItemChanged: (value) {
-                      selectDistrict.value=(districtRes.districts![value]);
-                    },
-                    itemExtent: 40,
-                    diameterRatio: 1.6,
-                    offAxisFraction: -0.4,
-                    squeeze: 0.8,
-                    clipBehavior: Clip.antiAlias,
-                    children: districtRes.districts!
-                        .map((e) => Obx((){
-                            return Text(
-                                  e.name!,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline6!
-                                      .copyWith(color:selectDistrict.value!=null && selectDistrict.value!.name==e.name!?AppColors.strongAmer: CupertinoColors.white),
-                                );
-                          }
-                        ))
-                        .toList()),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+  @override
+  onInit() {
+    DIO.BaseOptions options = DIO.BaseOptions(
+        baseUrl: BASE_URL,
+        connectTimeout: const Duration(minutes: 2),
+        receiveTimeout: const Duration(minutes: 2));
+    dio = DIO.Dio(options);
+    // _dio.interceptors.add(RetryInterceptor(dio: _dio));
+    dio.interceptors.add(RetryOnConnectionChangeInterceptor(
+        requestRetrier:
+        ConnectiveRequestRetrier(connectivity: Connectivity(), dio: dio)));
+    super.onInit();
   }
+  ///login
+  loginWithEmailPassword(String email, String password) async {
+    startLoading("Please Wait...");
+    printLog("email :$email password -$password");
+
+    final userInformation ={
+      "email":"developerorpon@gmail.com",
+      "password":"123456789"
+    };
+    try {
+      final DIO.Response response = await dio.post(USER_LOGIN,data: userInformation);
+      if (response.statusCode == 200) {
+        Map<String, dynamic> messageRes = response.data;
+        log("messageRes :$messageRes");
+
+
+        UserRes userResTemp=UserRes.fromJson(messageRes);
+        ///runtime save
+        userRes.value=userResTemp;
+        userModel.value=userResTemp.data;
+        ///save Local Database
+        LocalStorage.savedJWT(userResTemp.jwt??"");
+        String jsonString =
+        json.encode(userModel.value?.toJson());
+        LocalStorage.savedUserInformation(jsonString);
+
+        Get.offAll(const RedirectScreen(),transition: Transition.fadeIn);
+      }
+      EasyLoading.dismiss();
+    } on DIO.DioException catch (e) {
+      EasyLoading.dismiss();
+      log(e.toString());
+      log(e.requestOptions.baseUrl+e.requestOptions.path);
+      log(e.requestOptions.data);
+    }
+  }
+  ///LOGOUT
+logout(){
+    startLoading("Logout..");
+  LocalStorage.savedJWT("");
+  LocalStorage.savedUserInformation('');
+  userModel.value=null;
+  userRes.value=null;
+  EasyLoading.dismiss();
+  Get.offAll(const RedirectScreen(),transition: Transition.fadeIn);
+}
 }
