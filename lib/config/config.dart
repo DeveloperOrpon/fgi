@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
+import 'package:intl/intl.dart';
 
 final dashBoardDrawerOption = [
   {
@@ -28,3 +30,14 @@ final dashBoardDrawerOption = [
     'icon': FontAwesomeIcons.signOut,
   }
 ];
+var format = NumberFormat.simpleCurrency(locale: 'bn');
+ String currencySymbol=NumberFormat.simpleCurrency(locale: 'bn').currencySymbol;
+/// dialog time durations
+const Duration SNACKBAR_DURATION=Duration(seconds: 3);
+const SnackPosition SNACKBAR_POSITION= SnackPosition.BOTTOM;
+
+///app variable
+const String appName='FGI Y2J';
+const String appMainLogo='assets/images/image1.png';
+
+
