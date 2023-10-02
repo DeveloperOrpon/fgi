@@ -1,0 +1,30 @@
+workflows:
+    android-workflow:
+        cache:
+            cache_paths:
+                - $HOME/.gradle/caches
+                - $FLUTTER_ROOT/.pub-cache
+        environment:
+            cocoapods: default
+            flutter: stable
+            xcode: latest
+        scripts:
+            - name: Build Android APK
+              working_directory: android
+              script: ./gradlew assembleRelease
+        artifacts:
+            - app/build/outputs/**/**/*.apk
+
+    ios-workflow:
+        cache:
+            cache_paths:
+                - $FLUTTER_ROOT/.pub-cache
+        environment:
+            cocoapods: default
+            flutter: 3.13.3
+            xcode: 14
+        scripts:
+            - name: Build iOS App
+              script: flutter build ios
+        artifacts:
+            - build/ios/iphoneos/Runner.app # Adjust the path to match your project structure
