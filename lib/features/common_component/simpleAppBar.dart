@@ -7,13 +7,6 @@ import '../../config/route.dart';
 
 appBarComponent({required String title,required Function onTap}) {
   return AppBar(
-    systemOverlayStyle: const SystemUiOverlayStyle(
-      statusBarColor: Colors.white,
-      statusBarIconBrightness: Brightness.dark,
-      // For Android (dark icons)
-      statusBarBrightness: Brightness.light, // For iOS (dark icons)
-    ),
-    backgroundColor: Colors.transparent,
     leading: IconButton(
       onPressed: () {
         Get.back();

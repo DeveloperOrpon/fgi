@@ -39,7 +39,8 @@ class AppTextStyles {
 
   static const TextStyle bodySm = TextStyle(
     fontFamily: fontFamily,
-    fontSize: 14,
+    fontSize: 12,
+    color: Colors.white
   );
 
   static const TextStyle bodyLg = TextStyle(

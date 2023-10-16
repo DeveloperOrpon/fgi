@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:intl/intl.dart';
+import 'package:pdf/widgets.dart';
 
 final dashBoardDrawerOption = [
   {
@@ -17,14 +18,18 @@ final dashBoardDrawerOption = [
   {
     'index': 2,
     "title": "Products",
-    'icon': Icons.category,
+    'icon': FontAwesomeIcons.elementor,
   },
   {
     'index': 3,
-    "title": "Settings",
-    'icon': Icons.settings_rounded,
+    "title": "Categories",
+    'icon': Icons.category,
   },
   {
+    'index': 5,
+    "title": "Profile",
+    'icon': FontAwesomeIcons.user,
+  } , {
     'index': 4,
     "title": "Log out",
     'icon': FontAwesomeIcons.signOut,

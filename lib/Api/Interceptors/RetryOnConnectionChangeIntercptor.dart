@@ -1,9 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:async_button_builder/async_button_builder.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/dio.dart' as DIO;
 import 'package:fgi_y2j/features/authentication/controller/AuthenticationController.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../../features/Dialog/Authentication_Message.dart';
 import '../../features/cache_stroage/localStroage.dart';
@@ -19,9 +21,18 @@ class RetryOnConnectionChangeInterceptor extends Interceptor {
     final authenticationController=Get.put(AuthenticationController());
     authenticationController.loginButtonState.value=const ButtonState.idle();
     if (_shouldRetry(err)) {
+      // if(err.error is SocketException.)
+      final ConnectivityResult connectivity=await Connectivity().checkConnectivity();
+      if(connectivity!= ConnectivityResult.none){
+        authenticationErrorDialog('Warning', "Server Is Maintenance Phase Please Try Later");
+        handler.reject(err);
+        return;
+      }
+
       authenticationErrorDialog('Warning', "No Internet Connection. Turn On Connection.");
+      log("Solved : ${err.error is SocketException} ${connectivity}");
       DIO.Response response = await requestRetrier.scheduleRequestRetry(err);
-      log("Solved : ${response.data}");
+
       handler.resolve(response);
     } else {
       log("message : No Network Error ${err.type == DioErrorType.connectionError}");

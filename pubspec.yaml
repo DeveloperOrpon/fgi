@@ -4,7 +4,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: '>=3.1.1 <4.0.0'
 
 dependencies:
   flutter:
@@ -23,21 +23,21 @@ dependencies:
   google_fonts: ^6.1.0
   flutter_animate: ^4.2.0+1
   pull_down_button: ^0.9.3
-  data_table_2: ^2.5.8
+  data_table_2: any
   adaptive_scrollbar: ^2.1.2
   pull_to_refresh: ^2.0.0
   date_time_picker_widget: ^2.0.0
-  flutter_svg: ^2.0.7
+  flutter_svg: any
   pdf: any
   printing: any
   intl: any
   flutter_easyloading: ^3.0.5
   contained_tab_bar_view: ^0.8.0
   async_button_builder: ^3.0.0+1
-  pinput: ^3.0.1
+  pinput: any
   animated_splash_screen: any
   circular_countdown_timer: ^0.2.3
-  lottie: ^2.6.0
+  lottie: any
   cached_network_image:
   smooth_page_indicator:
   photo_view:
@@ -45,6 +45,7 @@ dependencies:
   bottom_bar_with_sheet: ^2.4.0
   animate_icons: ^2.0.0
   syncfusion_flutter_sliders:
+
   #toast:
   motion_toast: ^2.7.8
 
@@ -52,6 +53,12 @@ dependencies:
   shared_preferences: any
   dio: ^5.3.3
   connectivity: any
+  flutter_sticky_header: ^0.6.5
+  cherry_toast:
+  extended_phone_number_input:
+  image_picker:
+  image_cropper:
+  auto_animated: ^3.2.0
 
 #  information Package
 

@@ -14,3 +14,6 @@ List<Map<String,dynamic>> demoCategories=[
   {"name":"Sauces","url":"assets/demo/demo5.png"},
   {"name":"Packages","url":"assets/demo/demo6.png"},
 ];
+
+
+const kDefaultPadding = 20.0;

@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:fgi_y2j/features/Category_Brand/Screen/AllCategoryListScreen.dart';
 import 'package:fgi_y2j/features/authentication/controller/AuthenticationController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:get/get.dart';
 
 import '../../../config/config.dart';
 import '../../../config/style/text_style.dart';
+import '../../profile/screen/ProfileScreen.dart';
 import '../controller/dashboardController.dart';
 
 class DashDrawer extends StatelessWidget {
@@ -63,6 +65,14 @@ class DashDrawer extends StatelessWidget {
                           if (e['title'] == 'Log out') {
                             Get.back();
                             authController.logout();
+                            return;
+                          } if (e['title'] == 'Profile') {
+                            Get.back();
+                           Get.to(const ProfileScreen(),transition: Transition.fadeIn);
+                            return;
+                          } if (e['title'] == 'Categories') {
+                            Get.back();
+                           Get.to(const AllCategoryListScreen(),transition: Transition.fadeIn);
                             return;
                           } else {
                             Get.back();

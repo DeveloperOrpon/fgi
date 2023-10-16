@@ -25,6 +25,7 @@ class AuthenticationController extends GetxController {
   Rxn<Districts> selectDistrict = Rxn<Districts>();
   RxBool isShowCompany = RxBool(false);
   RxInt timelineIndex = RxInt(0);
+  RxInt selectCompany = RxInt(0);
   DivisionsRes divisionsRes = DivisionsRes.fromJson(division);
   DistrictRes districtRes = DistrictRes.fromJson(districts);
   late DIO.Dio dio;
@@ -164,23 +165,27 @@ class AuthenticationController extends GetxController {
       showErrorDialogInTop("Warning", "Please Provide All The Input Information", context);
       return;
     }
-    if(selectSubscription.value==null|| selectPaymentType.value==null|| selectDistrict.value==null|| selectDivision.value==null){
+    ///selectSubscription.value==null|| selectPaymentType.value==null||
+    if(selectDistrict.value==null|| selectDivision.value==null){
       showErrorDialogInTop("Warning", "Please Provide All The Selection Information", context);
       return;
     }
     startLoading("Please Wait");
     final userInformation = {
       "cartNumber": cartNumber,
-      "company": "Example Company",
+      "company": "Example Cmpany",
       "email":email,
-      "location":"${selectDistrict.value!},${selectDivision.value}",
+      "location": "${selectDivision.value!.name??''},${selectDistrict.value!.name??''}",
       "zipCode": zipCode,
       "firstName": firstname,
       "lastName": lastname,
-      "subscription": selectSubscription.value,
-      "paymentMethod": selectPaymentType.value,
-      "cardNumber": cartNumber,
-      "password": password };
+      "subscription": "Gold",
+      "paymentMethod": "Credit Card",
+      "cardNumber": "**** **** **** 1234",
+      "password": password
+    };
+
+    printLog("${userInformation.toString()}");
 
     try {
       final DIO.Response response =

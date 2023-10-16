@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../style/app_colors.dart';
 import '../style/text_style.dart';
 
+final ValueNotifier<ThemeMode> themeMode = ValueNotifier<ThemeMode>(ThemeMode.system);
+changeTheme(ThemeMode newThemeMode){
+  themeMode.value=newThemeMode;
+}
 class AppThemes {
   static ThemeData main({bool isDark = false}) {
     return ThemeData(
-      inputDecorationTheme: InputDecorationTheme(
 
+      inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor:Colors.white.withOpacity(.2),
         border: OutlineInputBorder(
@@ -15,13 +20,20 @@ class AppThemes {
           borderSide: BorderSide.none,
         )
       ),
+
       primaryColor: AppColors.primary,
       primarySwatch: AppColors.primaryMaterialColor,
       brightness: isDark ? Brightness.dark : Brightness.light,
       fontFamily: AppTextStyles.fontFamily,
-      scaffoldBackgroundColor: isDark ? AppColors.black : AppColors.sugar,
+      scaffoldBackgroundColor: isDark ? Colors.black: Colors.white,
       appBarTheme: AppBarTheme(
-        backgroundColor: isDark ? AppColors.black : AppColors.sugar,
+        systemOverlayStyle:  SystemUiOverlayStyle(
+          statusBarColor:isDark?Colors.black: Colors.white,
+          statusBarIconBrightness:isDark?Brightness.light: Brightness.dark,
+          // For Android (dark icons)
+          statusBarBrightness:isDark?Brightness.dark: Brightness.light, // For iOS (dark icons)
+        ),
+        backgroundColor: isDark ? Colors.black: Colors.transparent,
         elevation: 0,
       ),
       shadowColor: isDark
@@ -29,6 +41,7 @@ class AppThemes {
           : AppColors.black.withOpacity(0.2),
       cardColor: isDark ? AppColors.blackLight : AppColors.white,
       textTheme: TextTheme(
+
         headline1: AppTextStyles.h1.copyWith(
           color: isDark ? AppColors.white : AppColors.black,
         ),

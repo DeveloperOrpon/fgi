@@ -3,8 +3,9 @@ import 'package:bottom_bar_with_sheet/bottom_bar_with_sheet.dart';
 import 'package:fgi_y2j/config/config.dart';
 import 'package:fgi_y2j/config/route.dart';
 import 'package:fgi_y2j/config/style/text_style.dart';
-import 'package:fgi_y2j/features/Category/Controller/CategoryController.dart';
+import 'package:fgi_y2j/features/Category_Brand/Controller/CategoryController.dart';
 import 'package:fgi_y2j/features/common_component/simpleAppBar.dart';
+import 'package:fgi_y2j/features/search_product/component/searchProductUi.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -49,12 +50,47 @@ class CategoryByProductScreen extends StatelessWidget {
             endIconColor: Colors.white,
             clockwise: false,
           )),
-      backgroundColor: Colors.white,
-      appBar: appBarComponent(
-          title: categoryName,
-          onTap: () {
-            AppRoute().cartPage();
+      appBar: AppBar(
+        title: Text(categoryName),
+        leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(Icons.arrow_back_ios)),
+        actions: [
+          Obx(() {
+            return IconButton(
+                onPressed: () {
+                  categoryController.isListAllProduct.value =
+                  !categoryController.isListAllProduct.value;
+                },
+                icon: categoryController.isListAllProduct.value
+                    ? const Icon(
+                  CupertinoIcons.square_grid_2x2,
+                  color: Colors.black,
+                )
+                    : const Icon(
+                    CupertinoIcons.list_bullet_below_rectangle));
           }),
+          IconButton(
+              onPressed: () {
+                AppRoute().notificationScreen();
+              },
+              icon: const Icon(
+                CupertinoIcons.bell,
+                color: Colors.black,
+              )),
+          IconButton(
+              onPressed: () {
+                AppRoute().cartPage();
+              },
+              icon: const Icon(
+                CupertinoIcons.shopping_cart,
+                color: Colors.black,
+              ))
+        ],
+      ),
+      backgroundColor: Colors.white,
       body: SmartRefresher(
         physics: const BouncingScrollPhysics(),
         enablePullDown: true,
@@ -96,22 +132,41 @@ class CategoryByProductScreen extends StatelessWidget {
           categoryController.onLoadingPage();
         },
         child: CustomScrollView(
-          controller: categoryController.productScrollController,
-          physics: const BouncingScrollPhysics(),
+            controller: categoryController.productScrollController,
+            physics: const BouncingScrollPhysics(),
             slivers: [
-          SliverGrid(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                mainAxisExtent: 300, crossAxisCount: 1),
-            delegate: SliverChildBuilderDelegate(
-              childCount: 5,
-              (BuildContext context, int index) {
-                return SingleProductUiWidget(
-                  index: index,
-                );
-              },
-            ),
-          )
-        ]),
+           
+              Obx(() {
+                return !categoryController.isListAllProduct.value
+                    ? SliverGrid(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                mainAxisExtent: 300, crossAxisCount: 1),
+                        delegate: SliverChildBuilderDelegate(
+                          childCount: 5,
+                          (BuildContext context, int index) {
+                            return SingleProductUiWidget(
+                              index: index,
+                            );
+                          },
+                        ),
+                      )
+                    : SliverGrid(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisExtent: 255,
+                                crossAxisSpacing: 5,
+                                mainAxisSpacing: 5),
+                        delegate: SliverChildBuilderDelegate(
+                          childCount: 5,
+                          (BuildContext context, int index) {
+                            return SearchProductUI();
+                          },
+                        ),
+                      );
+              })
+            ]),
       ),
       bottomNavigationBar: BottomBarWithSheet(
         duration: const Duration(milliseconds: 600),
@@ -139,7 +194,7 @@ class CategoryByProductScreen extends StatelessWidget {
         onSelectItem: (index) => debugPrint('$index'),
         sheetChild: Container(
           padding: const EdgeInsets.only(left: 0, right: 0),
-          height:  310,
+          height: 310,
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(

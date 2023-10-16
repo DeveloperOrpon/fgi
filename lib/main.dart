@@ -22,12 +22,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      builder: EasyLoading.init(),
-      debugShowCheckedModeBanner: false,
-      title: appName,
-      theme:AppThemes.main(),
-      home:  RedirectScreen(),
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeMode,
+      builder:(context, theme, child)  {
+        return GetMaterialApp(
+          darkTheme: AppThemes.main( isDark: true),
+          themeMode:theme,
+          theme:AppThemes.main(),
+          builder: EasyLoading.init(),
+          debugShowCheckedModeBanner: false,
+          title: appName,
+          home:  const RedirectScreen(),
+        );
+      }
     );
   }
 }

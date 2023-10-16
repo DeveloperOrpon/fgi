@@ -1,5 +1,5 @@
 
-import 'package:fgi_y2j/features/view_products/component/AllProductHome.dart';
+import 'package:fgi_y2j/features/view_products/screen/AllProductHome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,8 +7,8 @@ import '../../../config/helper/helperFunction.dart';
 import '../../../config/route.dart';
 import '../../dashboard/Component/dashDrawer.dart';
 
-class AllProductScreen extends StatelessWidget {
-  const AllProductScreen({Key? key}) : super(key: key);
+class AllProductGridScreen extends StatelessWidget {
+  const AllProductGridScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

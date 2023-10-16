@@ -11,6 +11,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../config/helper/helperFunction.dart';
 import '../../../config/style/app_colors.dart';
 import '../../../config/style/text_style.dart';
+import '../../search_product/screen/search_screen.dart';
 import '../screen/CompleteOrdersScreen.dart';
 import '../../invoice/screen/InvoicesScreen.dart';
 import '../screen/PendingOrdersScreen.dart';
@@ -22,65 +23,72 @@ class OrderHistoryHome extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final orderController=Get.put(OrderController());
-    return SmartRefresher(
-      physics: const BouncingScrollPhysics(),
-      enablePullDown: true,
-      enablePullUp: true,
-      header: const WaterDropHeader(
-        waterDropColor: AppColors.primary,
-        refresh: CupertinoActivityIndicator(color:  AppColors.black,radius: 15,),
-      ),
-      footer: CustomFooter(
-        builder: (context, mode){
-          Widget body ;
-          if(mode==LoadStatus.idle){
-            body =  const Text("Pull up load");
-          }
-          else if(mode==LoadStatus.loading){
-            body =  const CupertinoActivityIndicator();
-          }
-          else if(mode == LoadStatus.failed){
-            body = const Text("Load Failed!Click retry!");
-          }
-          else if(mode == LoadStatus.canLoading){
-            body = const Text("release to load more");
-          }
-          else{
-            body = const Text("No more Data");
-          }
-          return SizedBox(
-            height: 55.0,
-            child: Center(child:body),
-          );
-        },
-      ),
-      controller: orderController.refreshHistoryController,
-      onRefresh: () {
-        printLog("onRefresh");
-        orderController.onRefreshHistoryPage();
-      },
-      onLoading: () {
-        printLog("onLoading");
-        orderController.onLoadingHistoryPage();
-      },
-      child: CustomScrollView(
+    // return SmartRefresher(
+    //   physics: const BouncingScrollPhysics(),
+    //   enablePullDown: true,
+    //   enablePullUp: true,
+    //   header: const WaterDropHeader(
+    //     waterDropColor: AppColors.primary,
+    //     refresh: CupertinoActivityIndicator(color:  AppColors.black,radius: 15,),
+    //   ),
+    //   footer: CustomFooter(
+    //     builder: (context, mode){
+    //       Widget body ;
+    //       if(mode==LoadStatus.idle){
+    //         body =  const Text("Pull up load");
+    //       }
+    //       else if(mode==LoadStatus.loading){
+    //         body =  const CupertinoActivityIndicator();
+    //       }
+    //       else if(mode == LoadStatus.failed){
+    //         body = const Text("Load Failed!Click retry!");
+    //       }
+    //       else if(mode == LoadStatus.canLoading){
+    //         body = const Text("release to load more");
+    //       }
+    //       else{
+    //         body = const Text("No more Data");
+    //       }
+    //       return SizedBox(
+    //         height: 55.0,
+    //         child: Center(child:body),
+    //       );
+    //     },
+    //   ),
+    //   controller: orderController.refreshHistoryController,
+    //   onRefresh: () {
+    //     printLog("onRefresh");
+    //     orderController.onRefreshHistoryPage();
+    //   },
+    //   onLoading: () {
+    //     printLog("onLoading");
+    //     orderController.onLoadingHistoryPage();
+    //   },
+    ///comment Remove
+      return CustomScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         slivers: [
           SliverList(
               delegate: SliverChildListDelegate([
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        size: 30,
+                InkWell(
+                  onTap: () {
+                    Get.to(const SearchScreen(),transition: Transition.upToDown);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: TextFormField(
+                      enabled: false,
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          size: 30,
+                        ),
+                        hintText: "Search",
+                        hintStyle:
+                        const TextStyle(color: Colors.grey, fontSize: 16),
+                        filled: true,
+                        fillColor: Colors.grey.shade200,
                       ),
-                      hintText: "Search",
-                      hintStyle:
-                      const TextStyle(color: Colors.grey, fontSize: 16),
-                      filled: true,
-                      fillColor: Colors.grey.shade200,
                     ),
                   ),
                 )
@@ -606,7 +614,7 @@ class OrderHistoryHome extends StatelessWidget {
                 SizedBox(height: 50)
               ]))
         ],
-      ),
+      // ),
     );
   }
 }

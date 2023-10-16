@@ -7,6 +7,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../config/config.dart';
+import '../../Dialog/Authentication_Message.dart';
+import '../../product_details/details_screen.dart';
+import '../Model/Product.dart';
 
 class SingleProductUi extends StatefulWidget {
   const SingleProductUi({Key? key}) : super(key: key);
@@ -35,115 +38,72 @@ class _SingleProductUiState extends State<SingleProductUi> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(8),
-      height: 270,
-      width: Get.width * .4,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade200,
-              blurRadius: 2,
-              spreadRadius: 2,
-              offset: Offset(2, 2),
-            )
-          ]),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Image.asset(
-                    "assets/demo/demo1.png",
-                    height: 110,
-                    fit: BoxFit.cover,
-                    width: Get.width * .4 - 4,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 5),
-          Text(
-            "Double Patty Burger",
-            style: GoogleFonts.roboto(color: Colors.black, fontSize: 16),
-          ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.only(left: 10),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                textAlign: TextAlign.left,
-                "122.00 $currencySymbol",
-                style: GoogleFonts.roboto(
-                    color: Colors.black,
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-          Container(
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.grey.shade100,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return InkWell(
+      onTap: () {
+        Get.to(ProductDetailsScreen(product: products[0]),transition: Transition.fadeIn);
+      },
+      child: Container(
+        margin: const EdgeInsets.all(8),
+        height: 270,
+        width: Get.width * .4,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade200,
+                blurRadius: 2,
+                spreadRadius: 2,
+                offset: Offset(2, 2),
+              )
+            ]),
+        child: Column(
+          children: [
+            Row(
               children: [
-                SizedBox(
-                  height: 38,
-                  width: 45,
-                  child: ElevatedButton(
-                      style: IconButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                          ))),
-                      onPressed: () {
-                        if (countProduct.isGreaterThan(0)) {
-                          setState(() {
-                            countProduct--;
-                          });
-                        }
-                      },
-                      child: Icon(CupertinoIcons.minus)),
-                ),
-                Expanded(
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    "$countProduct",
-                    style: GoogleFonts.roboto(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
+                Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Image.asset(
+                      "assets/demo/demo1.png",
+                      height: 110,
+                      fit: BoxFit.cover,
+                      width: Get.width * .4 - 4,
+                    ),
                   ),
                 ),
-                GestureDetector(
-                  onLongPressEnd: (details) {
-                    _cancelIncrease();
-                  },
-                  onLongPress: () {
-                    Future.delayed(Duration(milliseconds: 300), () {
-                      if (!_longPressCanceled) {
-                        _timer = Timer.periodic(Duration(milliseconds: 150),
-                                (timer) {
-                              _increaseAge();
-                            });
-                      }
-                    });
-                  },
-                  onTap: () {
-
-                  },
-                  child: SizedBox(
+              ],
+            ),
+            SizedBox(height: 5),
+            Text(
+              "Double Patty Burger",
+              style: GoogleFonts.roboto(color: Colors.black, fontSize: 16),
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(left: 10),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  textAlign: TextAlign.left,
+                  "122.00 $currencySymbol",
+                  style: GoogleFonts.roboto(
+                      color: Colors.black,
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            Container(
+              height: 40,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
                     height: 38,
                     width: 45,
                     child: ElevatedButton(
@@ -151,36 +111,86 @@ class _SingleProductUiState extends State<SingleProductUi> {
                             backgroundColor: Colors.white,
                             shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10),
+                              topLeft: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
                             ))),
-                        onFocusChange: (value) {
-                          log("onFocusChange : $value");
-                        },
                         onPressed: () {
-                          setState(() {
-                            countProduct++;
-                          });
+                          if (countProduct.isGreaterThan(0)) {
+                            setState(() {
+                              countProduct--;
+                            });
+                          }
                         },
-
-                        child: Icon(CupertinoIcons.plus)),
+                        child: Icon(CupertinoIcons.minus)),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      "$countProduct",
+                      style: GoogleFonts.roboto(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  GestureDetector(
+                    onLongPressEnd: (details) {
+                      _cancelIncrease();
+                    },
+                    onLongPress: () {
+                      Future.delayed(Duration(milliseconds: 300), () {
+                        if (!_longPressCanceled) {
+                          _timer = Timer.periodic(Duration(milliseconds: 150),
+                                  (timer) {
+                                _increaseAge();
+                              });
+                        }
+                      });
+                    },
+                    onTap: () {
+
+                    },
+                    child: SizedBox(
+                      height: 38,
+                      width: 45,
+                      child: ElevatedButton(
+                          style: IconButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10),
+                              ))),
+                          onFocusChange: (value) {
+                            log("onFocusChange : $value");
+                          },
+                          onPressed: () {
+                            setState(() {
+                              countProduct++;
+                            });
+                          },
+
+                          child: Icon(CupertinoIcons.plus)),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                      onPressed: () {}, child: Text("Add To Cart")),
-                ),
-              ],
-            ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          showSuccessToastTop("Information", "Product Added To cart", context);
+                        }, child: Text("Add To Cart")),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

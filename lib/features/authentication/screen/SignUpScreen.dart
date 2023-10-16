@@ -113,10 +113,10 @@ class SignUpScreen extends StatelessWidget {
                                               .timelineIndex.value ==
                                           1
                                       ? "Personal Details"
-                                      : authenticationController
-                                                  .timelineIndex.value ==
-                                              2
-                                          ? "Payment Details"
+                                      // : authenticationController
+                                      //             .timelineIndex.value ==
+                                      //         2
+                                      //     ? "Payment Details"
                                           : 'Check Informations',
                               style: AppTextStyles.boldstyle
                                   .copyWith(color: AppColors.white),
@@ -196,6 +196,46 @@ class SignUpScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              // Expanded(
+                              //   child: InkWell(
+                              //     onTap: () {
+                              //       if (authenticationController
+                              //               .signupFromKey.currentState!
+                              //               .validate() ||
+                              //           authenticationController
+                              //                   .timelineIndex.value >
+                              //               2) {
+                              //         authenticationController
+                              //             .timelineIndex.value = 2;
+                              //       } else {
+                              //         showErrorDialogInTop(
+                              //             "Warning",
+                              //             "Please Fill This State First",
+                              //             context);
+                              //       }
+                              //     },
+                              //     child: TimelineTile(
+                              //       axis: TimelineAxis.horizontal,
+                              //       alignment: TimelineAlign.center,
+                              //       indicatorStyle: IndicatorStyle(
+                              //         height: 15,
+                              //         width: 15,
+                              //         color: authenticationController
+                              //                         .timelineIndex.value ==
+                              //                     2 ||
+                              //                 authenticationController
+                              //                         .timelineIndex.value >
+                              //                     2
+                              //             ? AppColors.strongAmer
+                              //             : Colors.white,
+                              //       ),
+                              //       beforeLineStyle: const LineStyle(
+                              //         color: Colors.white,
+                              //         thickness: 2,
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
                               Expanded(
                                 child: InkWell(
                                   onTap: () {
@@ -217,6 +257,7 @@ class SignUpScreen extends StatelessWidget {
                                   child: TimelineTile(
                                     axis: TimelineAxis.horizontal,
                                     alignment: TimelineAlign.center,
+                                    isLast: true,
                                     indicatorStyle: IndicatorStyle(
                                       height: 15,
                                       width: 15,
@@ -226,47 +267,6 @@ class SignUpScreen extends StatelessWidget {
                                               authenticationController
                                                       .timelineIndex.value >
                                                   2
-                                          ? AppColors.strongAmer
-                                          : Colors.white,
-                                    ),
-                                    beforeLineStyle: const LineStyle(
-                                      color: Colors.white,
-                                      thickness: 2,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: InkWell(
-                                  onTap: () {
-                                    if (authenticationController
-                                            .signupFromKey.currentState!
-                                            .validate() ||
-                                        authenticationController
-                                                .timelineIndex.value >
-                                            3) {
-                                      authenticationController
-                                          .timelineIndex.value = 3;
-                                    } else {
-                                      showErrorDialogInTop(
-                                          "Warning",
-                                          "Please Fill This State First",
-                                          context);
-                                    }
-                                  },
-                                  child: TimelineTile(
-                                    axis: TimelineAxis.horizontal,
-                                    alignment: TimelineAlign.center,
-                                    isLast: true,
-                                    indicatorStyle: IndicatorStyle(
-                                      height: 15,
-                                      width: 15,
-                                      color: authenticationController
-                                                      .timelineIndex.value ==
-                                                  3 ||
-                                              authenticationController
-                                                      .timelineIndex.value >
-                                                  3
                                           ? AppColors.strongAmer
                                           : Colors.white,
                                     ),
@@ -302,48 +302,52 @@ class SignUpScreen extends StatelessWidget {
                                       style:
                                           const TextStyle(color: Colors.white),
                                       decoration: InputDecoration(
-                                          prefixIcon: SizedBox(
-                                            width: 60,
-                                            height: 57,
-                                            child: Container(
-                                                margin: const EdgeInsets.only(
-                                                    right: 10),
-                                                decoration: const BoxDecoration(
-                                                  color: AppColors.primary,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(10),
-                                                    topLeft:
-                                                        Radius.circular(10),
-                                                  ),
+                                        prefixIcon: SizedBox(
+                                          width: 60,
+                                          height: 57,
+                                          child: Container(
+                                              margin: const EdgeInsets.only(
+                                                  right: 10),
+                                              decoration: const BoxDecoration(
+                                                color: AppColors.primary,
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(10),
+                                                  topLeft: Radius.circular(10),
                                                 ),
-                                                child: const Icon(
-                                                  CupertinoIcons.creditcard,
-                                                  size: 25,
-                                                  color: AppColors.white,
-                                                )),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
+                                              ),
+                                              child: const Icon(
+                                                CupertinoIcons.creditcard,
+                                                size: 25,
+                                                color: AppColors.white,
+                                              )),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                              width: .5,
+                                              color: AppColors.primary),
+                                        ),
+                                        border: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width: .1,
+                                                color: AppColors.primary
+                                                    .withOpacity(.5)),
                                             borderRadius:
-                                                BorderRadius.circular(10),
-                                            borderSide: const BorderSide(
-                                                width: .5,
-                                                color: AppColors.primary),
-                                          ),
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: .1,
-                                                  color: AppColors.primary
-                                                      .withOpacity(.5)),
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          hintText: 'Cart Number',
-                                          hintStyle: AppTextStyles.boldstyle
-                                              .copyWith(
-                                                  color: AppColors.white,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 16))),
+                                                BorderRadius.circular(10)),
+                                        hintText: 'Cart Number',
+                                        labelText: 'Cart Number',
+                                        hintStyle: AppTextStyles.boldstyle
+                                            .copyWith(
+                                                color: AppColors.white,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 16),labelStyle: AppTextStyles.boldstyle
+                                            .copyWith(
+                                                color: AppColors.white,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 16),
+                                      )),
                                 ),
                               )
                             : authenticationController.timelineIndex.value == 1
@@ -506,157 +510,157 @@ class SignUpScreen extends StatelessWidget {
                                       ],
                                     ),
                                   )
-                                : authenticationController
-                                            .timelineIndex.value ==
-                                        2
-                                    ? BounceInRight(
-                                        from: 300,
-                                        delay: 300.ms,
-                                        child: Container(
-                                          margin:
-                                              const EdgeInsets.only(bottom: 20),
-                                          padding:
-                                              const EdgeInsets.only(left: 0),
-                                          height: 60,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white.withOpacity(.2),
-                                            border: Border.all(
-                                              color: Colors.transparent,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: PullDownButton(
-                                            menuOffset: 50,
-                                            position: PullDownMenuPosition.over,
-                                            itemBuilder: (context) => [
-                                              const PullDownMenuTitle(
-                                                  title: Text(
-                                                "Chose Subscription",
-                                              )),
-                                              PullDownMenuItem.selectable(
-                                                selected:
-                                                    authenticationController
-                                                            .selectSubscription
-                                                            .value ==
-                                                        "Basic Plan",
-                                                icon: Icons
-                                                    .airline_seat_recline_normal,
-                                                title: 'Basic Plan',
-                                                onTap: () {
-                                                  authenticationController
-                                                      .selectSubscription
-                                                      .value = "Basic Plan";
-                                                },
-                                              ),
-                                              const PullDownMenuDivider(),
-                                              PullDownMenuItem.selectable(
-                                                selected:
-                                                    authenticationController
-                                                            .selectSubscription
-                                                            .value ==
-                                                        "Pro Plan",
-                                                icon: Icons.paid_rounded,
-                                                title: 'Pro Plan',
-                                                onTap: () {
-                                                  authenticationController
-                                                      .selectSubscription
-                                                      .value = "Pro Plan";
-                                                },
-                                              ),
-                                              const PullDownMenuDivider(),
-                                              PullDownMenuItem.selectable(
-                                                selected:
-                                                    authenticationController
-                                                            .selectSubscription
-                                                            .value ==
-                                                        "Advance Plan",
-                                                icon: FontAwesomeIcons.adversal,
-                                                title: 'Advance Plan',
-                                                onTap: () {
-                                                  authenticationController
-                                                      .selectSubscription
-                                                      .value = "Advance Plan";
-                                                },
-                                              ),
-                                            ],
-                                            buttonBuilder:
-                                                (context, showMenu) => InkWell(
-                                              onTap: showMenu,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 60,
-                                                    height: 60,
-                                                    child: Container(
-                                                        margin: const EdgeInsets
-                                                            .only(right: 10),
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          color:
-                                                              AppColors.primary,
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    10),
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    10),
-                                                          ),
-                                                        ),
-                                                        child: const Icon(
-                                                          CupertinoIcons
-                                                              .purchased_circle_fill,
-                                                          size: 25,
-                                                          color:
-                                                              AppColors.white,
-                                                        )),
-                                                  ),
-                                                  Expanded(
-                                                    child: Obx(() {
-                                                      return Text(
-                                                          authenticationController
-                                                                  .selectSubscription
-                                                                  .value ??
-                                                              "Chose Subscription",
-                                                          style: AppTextStyles
-                                                              .boldstyle
-                                                              .copyWith(
-                                                                  fontSize: 14,
-                                                                  color:
-                                                                      AppColors
-                                                                          .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal));
-                                                    }),
-                                                  ),
-                                                  Container(
-                                                    width: 60,
-                                                    height: 60,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white
-                                                          .withOpacity(.25),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                    ),
-                                                    child: const Icon(
-                                                      Icons
-                                                          .arrow_drop_down_outlined,
-                                                      color: AppColors.white,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      )
+                                // : authenticationController
+                                //             .timelineIndex.value ==
+                                //         2
+                                //     ? BounceInRight(
+                                //         from: 300,
+                                //         delay: 300.ms,
+                                //         child: Container(
+                                //           margin:
+                                //               const EdgeInsets.only(bottom: 20),
+                                //           padding:
+                                //               const EdgeInsets.only(left: 0),
+                                //           height: 60,
+                                //           decoration: BoxDecoration(
+                                //             color: Colors.white.withOpacity(.2),
+                                //             border: Border.all(
+                                //               color: Colors.transparent,
+                                //             ),
+                                //             borderRadius:
+                                //                 BorderRadius.circular(10),
+                                //           ),
+                                //           child: PullDownButton(
+                                //             menuOffset: 50,
+                                //             position: PullDownMenuPosition.over,
+                                //             itemBuilder: (context) => [
+                                //               const PullDownMenuTitle(
+                                //                   title: Text(
+                                //                 "Chose Subscription",
+                                //               )),
+                                //               PullDownMenuItem.selectable(
+                                //                 selected:
+                                //                     authenticationController
+                                //                             .selectSubscription
+                                //                             .value ==
+                                //                         "Basic Plan",
+                                //                 icon: Icons
+                                //                     .airline_seat_recline_normal,
+                                //                 title: 'Basic Plan',
+                                //                 onTap: () {
+                                //                   authenticationController
+                                //                       .selectSubscription
+                                //                       .value = "Basic Plan";
+                                //                 },
+                                //               ),
+                                //               const PullDownMenuDivider(),
+                                //               PullDownMenuItem.selectable(
+                                //                 selected:
+                                //                     authenticationController
+                                //                             .selectSubscription
+                                //                             .value ==
+                                //                         "Pro Plan",
+                                //                 icon: Icons.paid_rounded,
+                                //                 title: 'Pro Plan',
+                                //                 onTap: () {
+                                //                   authenticationController
+                                //                       .selectSubscription
+                                //                       .value = "Pro Plan";
+                                //                 },
+                                //               ),
+                                //               const PullDownMenuDivider(),
+                                //               PullDownMenuItem.selectable(
+                                //                 selected:
+                                //                     authenticationController
+                                //                             .selectSubscription
+                                //                             .value ==
+                                //                         "Advance Plan",
+                                //                 icon: FontAwesomeIcons.adversal,
+                                //                 title: 'Advance Plan',
+                                //                 onTap: () {
+                                //                   authenticationController
+                                //                       .selectSubscription
+                                //                       .value = "Advance Plan";
+                                //                 },
+                                //               ),
+                                //             ],
+                                //             buttonBuilder:
+                                //                 (context, showMenu) => InkWell(
+                                //               onTap: showMenu,
+                                //               child: Row(
+                                //                 mainAxisAlignment:
+                                //                     MainAxisAlignment
+                                //                         .spaceBetween,
+                                //                 children: [
+                                //                   SizedBox(
+                                //                     width: 60,
+                                //                     height: 60,
+                                //                     child: Container(
+                                //                         margin: const EdgeInsets
+                                //                             .only(right: 10),
+                                //                         decoration:
+                                //                             const BoxDecoration(
+                                //                           color:
+                                //                               AppColors.primary,
+                                //                           borderRadius:
+                                //                               BorderRadius.only(
+                                //                             bottomLeft:
+                                //                                 Radius.circular(
+                                //                                     10),
+                                //                             topLeft:
+                                //                                 Radius.circular(
+                                //                                     10),
+                                //                           ),
+                                //                         ),
+                                //                         child: const Icon(
+                                //                           CupertinoIcons
+                                //                               .purchased_circle_fill,
+                                //                           size: 25,
+                                //                           color:
+                                //                               AppColors.white,
+                                //                         )),
+                                //                   ),
+                                //                   Expanded(
+                                //                     child: Obx(() {
+                                //                       return Text(
+                                //                           authenticationController
+                                //                                   .selectSubscription
+                                //                                   .value ??
+                                //                               "Chose Subscription",
+                                //                           style: AppTextStyles
+                                //                               .boldstyle
+                                //                               .copyWith(
+                                //                                   fontSize: 14,
+                                //                                   color:
+                                //                                       AppColors
+                                //                                           .white,
+                                //                                   fontWeight:
+                                //                                       FontWeight
+                                //                                           .normal));
+                                //                     }),
+                                //                   ),
+                                //                   Container(
+                                //                     width: 60,
+                                //                     height: 60,
+                                //                     decoration: BoxDecoration(
+                                //                       color: Colors.white
+                                //                           .withOpacity(.25),
+                                //                       borderRadius:
+                                //                           BorderRadius.circular(
+                                //                               10),
+                                //                     ),
+                                //                     child: const Icon(
+                                //                       Icons
+                                //                           .arrow_drop_down_outlined,
+                                //                       color: AppColors.white,
+                                //                     ),
+                                //                   ),
+                                //                 ],
+                                //               ),
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       )
                                     : const Center();
                       }),
                       Obx(() {
@@ -676,6 +680,8 @@ class SignUpScreen extends StatelessWidget {
                                   ),
                                   child: InkWell(
                                     onTap: () {
+                                      FocusScope.of(context).unfocus();
+
                                       authenticationController
                                               .isShowCompany.value =
                                           !authenticationController
@@ -700,7 +706,7 @@ class SignUpScreen extends StatelessWidget {
                                                 ),
                                               ),
                                               child: const Icon(
-                                                Icons.mail,
+                                                CupertinoIcons.command,
                                                 size: 25,
                                                 color: AppColors.white,
                                               )),
@@ -804,139 +810,139 @@ class SignUpScreen extends StatelessWidget {
                                                     fontWeight: FontWeight.w400,
                                                     fontSize: 16))),
                                   )
-                                : authenticationController
-                                            .timelineIndex.value ==
-                                        2
-                                    ? BounceInLeft(
-                                        from: 300,
-                                        delay: 300.ms,
-                                        child: PullDownButton(
-                                          menuOffset: 50,
-                                          position: PullDownMenuPosition.over,
-                                          itemBuilder: (context) => [
-                                            const PullDownMenuTitle(
-                                                title: Text(
-                                              "Payment Method",
-                                            )),
-                                            PullDownMenuItem.selectable(
-                                              selected: authenticationController
-                                                      .selectPaymentType
-                                                      .value ==
-                                                  "Cash-On",
-                                              icon: FontAwesomeIcons.amazonPay,
-                                              title: "Cash-On",
-                                              onTap: () {
-                                                authenticationController
-                                                    .selectPaymentType
-                                                    .value = "Cash-On";
-                                              },
-                                            ),
-                                            const PullDownMenuDivider(),
-                                            PullDownMenuItem.selectable(
-                                              selected: authenticationController
-                                                      .selectPaymentType
-                                                      .value ==
-                                                  "Online Payment",
-                                              icon: CupertinoIcons.creditcard,
-                                              title: "Online Payment",
-                                              onTap: () {
-                                                authenticationController
-                                                    .selectPaymentType
-                                                    .value = "Online Payment";
-                                              },
-                                            ),
-                                          ],
-                                          buttonBuilder: (context, showMenu) =>
-                                              Container(
-                                            margin: const EdgeInsets.only(
-                                                bottom: 10),
-                                            padding:
-                                                const EdgeInsets.only(left: 0),
-                                            height: 60,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  Colors.white.withOpacity(.2),
-                                              border: Border.all(
-                                                color: Colors.transparent,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: InkWell(
-                                              onTap: showMenu,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 60,
-                                                    height: 60,
-                                                    child: Container(
-                                                        margin: const EdgeInsets
-                                                            .only(right: 10),
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          color:
-                                                              AppColors.primary,
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    10),
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    10),
-                                                          ),
-                                                        ),
-                                                        child: const Icon(
-                                                          Icons.payment,
-                                                          size: 25,
-                                                          color:
-                                                              AppColors.white,
-                                                        )),
-                                                  ),
-                                                  Expanded(
-                                                    child: Obx(() {
-                                                      return Text(
-                                                          authenticationController
-                                                                  .selectPaymentType
-                                                                  .value ??
-                                                              "Payment Method",
-                                                          style: AppTextStyles
-                                                              .boldstyle
-                                                              .copyWith(
-                                                                  fontSize: 14,
-                                                                  color:
-                                                                      AppColors
-                                                                          .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal));
-                                                    }),
-                                                  ),
-                                                  Container(
-                                                    width: 60,
-                                                    height: 60,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white
-                                                          .withOpacity(.25),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                    ),
-                                                    child: const Icon(
-                                                      Icons
-                                                          .arrow_drop_down_outlined,
-                                                      color: AppColors.white,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      )
+                                // : authenticationController
+                                //             .timelineIndex.value ==
+                                //         2
+                                //     ? BounceInLeft(
+                                //         from: 300,
+                                //         delay: 300.ms,
+                                //         child: PullDownButton(
+                                //           menuOffset: 50,
+                                //           position: PullDownMenuPosition.over,
+                                //           itemBuilder: (context) => [
+                                //             const PullDownMenuTitle(
+                                //                 title: Text(
+                                //               "Payment Method",
+                                //             )),
+                                //             PullDownMenuItem.selectable(
+                                //               selected: authenticationController
+                                //                       .selectPaymentType
+                                //                       .value ==
+                                //                   "Cash-On",
+                                //               icon: FontAwesomeIcons.amazonPay,
+                                //               title: "Cash-On",
+                                //               onTap: () {
+                                //                 authenticationController
+                                //                     .selectPaymentType
+                                //                     .value = "Cash-On";
+                                //               },
+                                //             ),
+                                //             const PullDownMenuDivider(),
+                                //             PullDownMenuItem.selectable(
+                                //               selected: authenticationController
+                                //                       .selectPaymentType
+                                //                       .value ==
+                                //                   "Online Payment",
+                                //               icon: CupertinoIcons.creditcard,
+                                //               title: "Online Payment",
+                                //               onTap: () {
+                                //                 authenticationController
+                                //                     .selectPaymentType
+                                //                     .value = "Online Payment";
+                                //               },
+                                //             ),
+                                //           ],
+                                //           buttonBuilder: (context, showMenu) =>
+                                //               Container(
+                                //             margin: const EdgeInsets.only(
+                                //                 bottom: 10),
+                                //             padding:
+                                //                 const EdgeInsets.only(left: 0),
+                                //             height: 60,
+                                //             decoration: BoxDecoration(
+                                //               color:
+                                //                   Colors.white.withOpacity(.2),
+                                //               border: Border.all(
+                                //                 color: Colors.transparent,
+                                //               ),
+                                //               borderRadius:
+                                //                   BorderRadius.circular(10),
+                                //             ),
+                                //             child: InkWell(
+                                //               onTap: showMenu,
+                                //               child: Row(
+                                //                 mainAxisAlignment:
+                                //                     MainAxisAlignment
+                                //                         .spaceBetween,
+                                //                 children: [
+                                //                   SizedBox(
+                                //                     width: 60,
+                                //                     height: 60,
+                                //                     child: Container(
+                                //                         margin: const EdgeInsets
+                                //                             .only(right: 10),
+                                //                         decoration:
+                                //                             const BoxDecoration(
+                                //                           color:
+                                //                               AppColors.primary,
+                                //                           borderRadius:
+                                //                               BorderRadius.only(
+                                //                             bottomLeft:
+                                //                                 Radius.circular(
+                                //                                     10),
+                                //                             topLeft:
+                                //                                 Radius.circular(
+                                //                                     10),
+                                //                           ),
+                                //                         ),
+                                //                         child: const Icon(
+                                //                           Icons.payment,
+                                //                           size: 25,
+                                //                           color:
+                                //                               AppColors.white,
+                                //                         )),
+                                //                   ),
+                                //                   Expanded(
+                                //                     child: Obx(() {
+                                //                       return Text(
+                                //                           authenticationController
+                                //                                   .selectPaymentType
+                                //                                   .value ??
+                                //                               "Payment Method",
+                                //                           style: AppTextStyles
+                                //                               .boldstyle
+                                //                               .copyWith(
+                                //                                   fontSize: 14,
+                                //                                   color:
+                                //                                       AppColors
+                                //                                           .white,
+                                //                                   fontWeight:
+                                //                                       FontWeight
+                                //                                           .normal));
+                                //                     }),
+                                //                   ),
+                                //                   Container(
+                                //                     width: 60,
+                                //                     height: 60,
+                                //                     decoration: BoxDecoration(
+                                //                       color: Colors.white
+                                //                           .withOpacity(.25),
+                                //                       borderRadius:
+                                //                           BorderRadius.circular(
+                                //                               10),
+                                //                     ),
+                                //                     child: const Icon(
+                                //                       Icons
+                                //                           .arrow_drop_down_outlined,
+                                //                       color: AppColors.white,
+                                //                     ),
+                                //                   ),
+                                //                 ],
+                                //               ),
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       )
                                     : const Center();
                       }),
                       Obx(() {
@@ -1021,25 +1027,57 @@ class SignUpScreen extends StatelessWidget {
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                             children: [
-                              Container(
-                                margin: const EdgeInsets.only(right: 10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white.withOpacity(.2),
-                                ),
-                                height: 60,
-                                width: Get.width * .43,
-                                child: Image.asset('assets/demo/a.png'),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white.withOpacity(.2),
-                                ),
-                                height: 60,
-                                width: Get.width * .43,
-                                child: Image.asset('assets/demo/b.png'),
-                              ),
+                              Obx(() {
+                                return InkWell(
+                                  onTap: () {
+                                    FocusScope.of(context).unfocus();
+
+                                    authenticationController
+                                        .selectCompany.value = 0;
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.only(right: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white.withOpacity(.2),
+                                        border: authenticationController
+                                                    .selectCompany.value ==
+                                                0
+                                            ? Border.all(
+                                                color: AppColors.primary,
+                                                width: 2)
+                                            : null),
+                                    height: 60,
+                                    width: Get.width * .43,
+                                    child: Image.asset('assets/demo/a.png'),
+                                  ),
+                                );
+                              }),
+                              Obx(() {
+                                return InkWell(
+                                  onTap: () {
+                                    FocusScope.of(context).unfocus();
+
+                                    authenticationController
+                                        .selectCompany.value = 1;
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white.withOpacity(.2),
+                                        border: authenticationController
+                                                    .selectCompany.value ==
+                                                1
+                                            ? Border.all(
+                                                color: AppColors.primary,
+                                                width: 2)
+                                            : null),
+                                    height: 60,
+                                    width: Get.width * .43,
+                                    child: Image.asset('assets/demo/b.png'),
+                                  ),
+                                );
+                              }),
                             ],
                           ),
                         );
@@ -1062,6 +1100,7 @@ class SignUpScreen extends StatelessWidget {
                                   ),
                                   child: InkWell(
                                     onTap: () {
+                                      FocusScope.of(context).unfocus();
                                       showAddressBottomSheet(context);
                                     },
                                     child: Row(
@@ -1098,7 +1137,11 @@ class SignUpScreen extends StatelessWidget {
                                                           FontWeight.normal)),
                                         ),
                                         Container(
-                                          width: 60,
+                                          width: authenticationController
+                                                      .selectDistrict.value !=
+                                                  null
+                                              ? Get.width * .4
+                                              : 60,
                                           height: 60,
                                           decoration: BoxDecoration(
                                             color:
@@ -1106,10 +1149,22 @@ class SignUpScreen extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(10),
                                           ),
-                                          child: const Icon(
-                                            Icons.arrow_drop_down_outlined,
-                                            color: AppColors.white,
-                                          ),
+                                          child: authenticationController
+                                                      .selectDistrict.value !=
+                                                  null
+                                              ? Center(
+                                                  child: Text(
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          AppTextStyles.bodySm,
+                                                      '${authenticationController.selectDivision.value!.name},${authenticationController.selectDistrict.value!.name}'),
+                                                )
+                                              : const Icon(
+                                                  Icons
+                                                      .arrow_drop_down_outlined,
+                                                  color: AppColors.white,
+                                                ),
                                         ),
                                       ],
                                     ),
@@ -1177,79 +1232,80 @@ class SignUpScreen extends StatelessWidget {
                                                     fontWeight: FontWeight.w400,
                                                     fontSize: 16))),
                                   )
-                                : authenticationController
-                                            .timelineIndex.value ==
-                                        2
-                                    ? BounceInRight(
-                                        from: 300,
-                                        delay: 300.ms,
-                                        child: TextFormField(
-                                            keyboardType: TextInputType.number,
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.length < 6) {
-                                                return "Please Provide Cart Number";
-                                              }
-                                              return null;
-                                            },
-                                            controller: authenticationController
-                                                .cartNumberController,
-                                            style: const TextStyle(
-                                                color: Colors.white),
-                                            decoration: InputDecoration(
-                                                hintText: 'Cart Number',
-                                                prefixIcon: SizedBox(
-                                                  width: 60,
-                                                  height: 57,
-                                                  child: Container(
-                                                      margin:
-                                                          const EdgeInsets.only(
-                                                              right: 10),
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        color:
-                                                            AppColors.primary,
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                          bottomLeft:
-                                                              Radius.circular(
-                                                                  10),
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  10),
-                                                        ),
-                                                      ),
-                                                      child: const Icon(
-                                                        CupertinoIcons
-                                                            .creditcard,
-                                                        size: 25,
-                                                        color: AppColors.white,
-                                                      )),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  borderSide: const BorderSide(
-                                                      width: .5,
-                                                      color: AppColors.primary),
-                                                ),
-                                                border: OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        width: .1,
-                                                        color: AppColors.primary
-                                                            .withOpacity(.5)),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10)),
-                                                hintStyle: AppTextStyles
-                                                    .boldstyle
-                                                    .copyWith(
-                                                        color: AppColors.white,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        fontSize: 16))),
-                                      )
+                                // : authenticationController
+                                //             .timelineIndex.value ==
+                                //         2
+                                //     ? BounceInRight(
+                                //         from: 300,
+                                //         delay: 300.ms,
+                                //         child: TextFormField(
+                                //             keyboardType: TextInputType.number,
+                                //             validator: (value) {
+                                //               if (value == null ||
+                                //                   value.length < 6) {
+                                //                 return "Please Provide Cart Number";
+                                //               }
+                                //               return null;
+                                //             },
+                                //             controller: authenticationController
+                                //                 .cartNumberController,
+                                //             style: const TextStyle(
+                                //                 color: Colors.white),
+                                //             decoration: InputDecoration(
+                                //                 hintText: 'Cart Number',
+                                //                 labelText: 'Cart Number',
+                                //                 prefixIcon: SizedBox(
+                                //                   width: 60,
+                                //                   height: 57,
+                                //                   child: Container(
+                                //                       margin:
+                                //                           const EdgeInsets.only(
+                                //                               right: 10),
+                                //                       decoration:
+                                //                           const BoxDecoration(
+                                //                         color:
+                                //                             AppColors.primary,
+                                //                         borderRadius:
+                                //                             BorderRadius.only(
+                                //                           bottomLeft:
+                                //                               Radius.circular(
+                                //                                   10),
+                                //                           topLeft:
+                                //                               Radius.circular(
+                                //                                   10),
+                                //                         ),
+                                //                       ),
+                                //                       child: const Icon(
+                                //                         CupertinoIcons
+                                //                             .creditcard,
+                                //                         size: 25,
+                                //                         color: AppColors.white,
+                                //                       )),
+                                //                 ),
+                                //                 focusedBorder:
+                                //                     OutlineInputBorder(
+                                //                   borderRadius:
+                                //                       BorderRadius.circular(10),
+                                //                   borderSide: const BorderSide(
+                                //                       width: .5,
+                                //                       color: AppColors.primary),
+                                //                 ),
+                                //                 border: OutlineInputBorder(
+                                //                     borderSide: BorderSide(
+                                //                         width: .1,
+                                //                         color: AppColors.primary
+                                //                             .withOpacity(.5)),
+                                //                     borderRadius:
+                                //                         BorderRadius.circular(
+                                //                             10)),
+                                //                 hintStyle: AppTextStyles
+                                //                     .boldstyle
+                                //                     .copyWith(
+                                //                         color: AppColors.white,
+                                //                         fontWeight:
+                                //                             FontWeight.w400,
+                                //                         fontSize: 16))),
+                                //       )
                                     : const Center();
                       }),
                       Obx(() {
@@ -1274,6 +1330,7 @@ class SignUpScreen extends StatelessWidget {
                                           const TextStyle(color: Colors.white),
                                       decoration: InputDecoration(
                                           hintText: 'Zip Code',
+                                          labelText: 'Zip Code',
                                           prefixIcon: SizedBox(
                                             width: 60,
                                             height: 57,
@@ -1311,6 +1368,11 @@ class SignUpScreen extends StatelessWidget {
                                                       .withOpacity(.5)),
                                               borderRadius:
                                                   BorderRadius.circular(10)),
+                                          labelStyle: AppTextStyles.boldstyle
+                                              .copyWith(
+                                              color: AppColors.white,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 16),
                                           hintStyle: AppTextStyles.boldstyle
                                               .copyWith(
                                                   color: AppColors.white,
@@ -1393,7 +1455,7 @@ class SignUpScreen extends StatelessWidget {
                                 : const Center();
                       }),
                       Obx(() => authenticationController.timelineIndex.value ==
-                              3
+                              2
                           ? FadeIn(
                               delay: 300.ms,
                               child: Column(
@@ -1507,18 +1569,26 @@ class SignUpScreen extends StatelessWidget {
                         return OutlinedButton(
                           onPressed: () {
                             if (authenticationController.timelineIndex.value >
-                                2) {
+                                1) {
                               _signUpUser(authenticationController, context);
                               return;
                             } else {
-                              if(authenticationController.timelineIndex.value==2){
-                                if(authenticationController.selectPaymentType.value==null || authenticationController.selectSubscription.value==null) {
-                                  showErrorDialogInTop("Warning",
-                                    "Please Select Payment Method & Subscriptions", context);
-                                  return;
-                                }
-
-                              }
+                              // if (authenticationController
+                              //         .timelineIndex.value ==
+                              //     1) {
+                              //   if (authenticationController
+                              //               .selectPaymentType.value ==
+                              //           null ||
+                              //       authenticationController
+                              //               .selectSubscription.value ==
+                              //           null) {
+                              //     showErrorDialogInTop(
+                              //         "Warning",
+                              //         "Please Select Payment Method & Subscriptions",
+                              //         context);
+                              //     return;
+                              //   }
+                              // }
                               if (authenticationController
                                       .selectDistrict.value ==
                                   null) {
@@ -1536,18 +1606,18 @@ class SignUpScreen extends StatelessWidget {
                           style: OutlinedButton.styleFrom(
                               backgroundColor:
                                   authenticationController.timelineIndex.value >
-                                          2
+                                          1
                                       ? AppColors.primary
                                       : null,
                               side: authenticationController
                                           .timelineIndex.value >
-                                      2
+                                      1
                                   ? BorderSide.none
                                   : const BorderSide(color: AppColors.white),
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 40, vertical: 15)),
                           child: Text(
-                            authenticationController.timelineIndex.value > 2
+                            authenticationController.timelineIndex.value > 1
                                 ? "Create Account"
                                 : "Next ",
                             style: AppTextStyles.boldstyle.copyWith(
