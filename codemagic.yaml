@@ -25,6 +25,6 @@ workflows:
             xcode: 14
         scripts:
             - name: Build iOS App
-              script: flutter build ios
+              script: flutter build ipa --export-options-plist="---/build/ios/archive/ProjectName.xcarchive/Info.plist"
         artifacts:
             - build/ios/iphoneos/Runner.app # Adjust the path to match your project structure
