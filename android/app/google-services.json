@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "492187942103",
+    "project_id": "fgi-y2g-development",
+    "storage_bucket": "fgi-y2g-development.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492187942103:android:e9298dc8fa6aada3e74492",
+        "android_client_info": {
+          "package_name": "com.example.fgi_y2j"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRVgSByTFC4CeJwmfhQs0dYDluxhKAEbw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
